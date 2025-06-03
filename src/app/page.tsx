@@ -1,9 +1,8 @@
 
-"use client"
 import { Hero } from "@/components/sections/hero"
 import { Features } from "@/components/sections/features"
 import { Demo } from "@/components/sections/demo"
-import { Testimonials } from "@/components/sections/testimonials"
+//import { Testimonials } from "@/components/sections/testimonials"
 import { Contact } from "@/components/sections/contact"
 import { Footer } from "@/components/footer"
 

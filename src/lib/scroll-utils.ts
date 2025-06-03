@@ -59,8 +59,8 @@ export const debounce = <F extends (...args: any[]) => any>(
 export const initSmoothScrolling = () => {
   if (typeof window === 'undefined') return;
 
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', function(this: HTMLAnchorElement, e: Event) {
       e.preventDefault();
       const targetId = this.getAttribute('href');
       if (targetId && targetId !== '#') {

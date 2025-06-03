@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Navigation } from '@/components/navigation'
-import { LazyMotion, domAnimation } from 'framer-motion'
+import { MotionProvider } from '@/components/providers/motion-provider'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -48,12 +48,12 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <LazyMotion features={domAnimation}>
+          <MotionProvider>
             <Navigation />
             <main className="pt-20 md:max-w-[80%] max-w-[95%] w-full mx-auto">
               {children}
             </main>
-          </LazyMotion>
+          </MotionProvider>
         </ThemeProvider>
       </body>
     </html>
