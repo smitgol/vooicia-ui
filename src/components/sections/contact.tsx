@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, MapPin, Phone } from "lucide-react"
 import { useState, FormEvent, ChangeEvent } from "react"
 import { motion } from "framer-motion"
 
@@ -109,12 +108,12 @@ export function Contact() {
           message: data.error || "Failed to send message. Please try again."
         });
       }
-    } catch (error) {
+    } catch (error: unknown) {
       setStatus({
         isSubmitting: false,
         isSuccess: false,
         isError: true,
-        message: "Something went wrong. Please try again later."
+        message: `Something went wrong. Please try again later. ${error}`
       });
     }
   };

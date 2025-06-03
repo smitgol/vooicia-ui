@@ -26,7 +26,7 @@ export function Navigation() {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full mx-auto bg-background/80 backdrop-blur-md`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full mx-auto ${isScrolled ? 'bg-background/90 shadow-sm' : 'bg-background/80'} backdrop-blur-md`}
     >
       <div className="container mx-auto py-4 flex flex-col justify-center md:max-w-[80%] max-w-[90%] gap-4 sm:gap-8">
         <div className={`flex items-center justify-between w-full flex`}>

@@ -1,15 +1,9 @@
 "use client"
-import { useState, useRef, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Phone, Mic, Send, Loader2 } from "lucide-react"
+import { Phone, Loader2 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import {
-  useRTVIClient,
-  RTVIClientAudio,
-} from "@pipecat-ai/client-react";
-import { div } from "framer-motion/client"
 import {
   Select,
   SelectContent,
@@ -23,20 +17,6 @@ import {
 export function Demo() {
   const [isCalling, setIsCalling] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
-  const [audioInput, setAudioInput] = useState(false)
-  const [waveform, setWaveform] = useState([])
-  const audioClient = useRTVIClient();
-
-  // Generate waveform data with smoothing
-  useEffect(() => {
-    if (!isCalling) return;
-    
-    
-  }, [audioInput, isProcessing, isCalling]);
-
-  const toggleMicrophone = () => {
-    setAudioInput(prev => !prev);
-  };
 
   const startCall = () => {
     setIsProcessing(true);
@@ -44,13 +24,7 @@ export function Demo() {
     setTimeout(() => {
       setIsProcessing(false);
       setIsCalling(true);
-      setAudioInput(true); // Auto-start listening
     }, 1500);
-  };
-
-  const endCall = () => {
-    setIsProcessing(true);
-    setAudioInput(false);
   };
 
   // Animation variants

@@ -1,6 +1,5 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { useState, useEffect } from "react"
 
@@ -14,7 +13,7 @@ export function Hero() {
     }, 3000) // Change phrase every 3 seconds
     
     return () => clearInterval(interval)
-  }, [])
+  }, [phrases.length])
   return (
     <section className="relative overflow-hidden min-h-[90vh] flex items-center">
       <div className="absolute inset-0 bg-grid-white/[0.05] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
@@ -41,12 +40,12 @@ export function Hero() {
           </h1>
           
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-          From lead qualification to follow-ups,  our AI does the heavy lifting in multi language.
+          From lead qualification to follow-ups, our AI does the heavy lifting in multi language.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="font-bold cursor-pointer text-lg px-8 py-6 hover:from-purple-700 hover:to-blue-800 transition-all">
-              Try It Now - It's Free
+              Try It Now - It&apos;s Free
             </Button>
 
           </div>

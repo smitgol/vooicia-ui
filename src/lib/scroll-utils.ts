@@ -29,12 +29,12 @@ export const isInViewport = (element: HTMLElement, offset = 0) => {
 };
 
 // Throttle function for scroll events
-export const throttle = <F extends (...args: any[]) => any>(
+export const throttle = <F extends (...args: unknown[]) => unknown>(
   func: F,
   limit: number
 ): ((...args: Parameters<F>) => void) => {
   let inThrottle = false;
-  return function (this: any, ...args: Parameters<F>) {
+  return function (this: unknown, ...args: Parameters<F>) {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
@@ -44,12 +44,12 @@ export const throttle = <F extends (...args: any[]) => any>(
 };
 
 // Debounce function for scroll events
-export const debounce = <F extends (...args: any[]) => any>(
+export const debounce = <F extends (...args: unknown[]) => unknown>(
   func: F,
   wait: number
 ): ((...args: Parameters<F>) => void) => {
   let timeout: NodeJS.Timeout;
-  return function (this: any, ...args: Parameters<F>) {
+  return function (this: unknown, ...args: Parameters<F>) {
     clearTimeout(timeout);
     timeout = setTimeout(() => func.apply(this, args), wait);
   };
