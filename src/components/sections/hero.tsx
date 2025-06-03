@@ -21,9 +21,9 @@ export function Hero() {
       <div className="container relative z-10 px-4 mx-auto">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
-            <span className="gradient-text">AI Voice Agent For</span> 
+            <span className="gradient-text md:text-7xl text-5xl">AI Voice Agent For</span> 
             <br />
-            <div className="h-[1.25em] overflow-hidden relative gradient-text">
+            <div className="h-[1.25em] w-full overflow-hidden relative gradient-text">
               <AnimatePresence mode="sync">
                 <motion.span 
                   key={currentIndex}
@@ -31,7 +31,7 @@ export function Hero() {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -50, opacity: 0 }}
                   transition={{ duration: 0.5, ease: "easeInOut" }}
-                  className="absolute inset-0 gradient-text"
+                  className="absolute inset-0 gradient-text md:text-7xl text-4xl"
                 >
                 {phrases[currentIndex]}
                 </motion.span>
@@ -50,7 +50,7 @@ export function Hero() {
 
           </div>
           
-          <div className="mt-12 flex flex-wrap justify-center gap-6 text-muted-foreground">
+          <div className="mt-12 flex flex-col md:flex-row justify-center gap-6 text-muted-foreground w-[65%] mx-auto">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               <span>Integrate with AI workflow</span>
