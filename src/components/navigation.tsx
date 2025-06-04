@@ -35,7 +35,7 @@ export function Navigation() {
             
           <Link href="/" className="flex items-center gap-2">
             <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-800 bg-clip-text text-transparent">
-              Voocia
+              Vooicia
             </span>
           </Link>
           <button 

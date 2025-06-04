@@ -13,7 +13,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Voocia - Revolutionizing Business Communication',
+  title: 'Vooicia - Revolutionizing Business Communication',
   description: 'Experience the future of customer service with our AI-powered call agent. Available 24/7 with multilingual support for the Indian market.',
   keywords: ['AI call agent', 'customer service', 'India', 'business communication', 'AI assistant'],
 }
