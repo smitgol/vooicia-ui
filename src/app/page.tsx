@@ -1,12 +1,10 @@
+import { lazy } from "react"
 
-import { Hero } from "@/components/sections/hero"
-import { Features } from "@/components/sections/features"
-import { Demo } from "@/components/sections/demo"
-//import { Testimonials } from "@/components/sections/testimonials"
-import { Contact } from "@/components/sections/contact"
-import { Footer } from "@/components/footer"
-
-
+const Hero = lazy(() => import("../components/sections/hero"))
+const Features = lazy(() => import("@/components/sections/features"))
+const Demo = lazy(() => import("@/components/sections/demo"))
+const Contact = lazy(() => import("@/components/sections/contact"))
+const Footer = lazy(() => import("@/components/footer"))
 
 export default function Home() {
   return (

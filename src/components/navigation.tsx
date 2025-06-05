@@ -1,11 +1,12 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export function Navigation() {
+  const router = useRouter()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -59,7 +60,7 @@ export function Navigation() {
                 {link.name}
               </Link>
             ))}
-            <Button className="ml-4 font-bold cursor-pointer hover:scale-105 transition delay-200 duration-300 ease-in-out">
+            <Button className="ml-4 font-bold cursor-pointer hover:scale-105 transition delay-200 duration-300 ease-in-out" onClick={() => router.push("#demo")}>
               Try Now
             </Button>
           </nav>
@@ -84,7 +85,10 @@ export function Navigation() {
               ))}
               <Button 
                 className="w-full mt-2 cursor-pointer"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  setIsMenuOpen(false)
+                  router.push("#demo")
+                }}
               >
                 Try Now
               </Button>

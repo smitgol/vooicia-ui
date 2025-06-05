@@ -4,7 +4,7 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Navigation } from '@/components/navigation'
 import { MotionProvider } from '@/components/providers/motion-provider'
-
+import { Analytics } from "@vercel/analytics/next"
 const inter = Inter({ 
   subsets: ['latin'],
   display: 'swap',
@@ -55,6 +55,7 @@ export default function RootLayout({
             </main>
           </MotionProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )

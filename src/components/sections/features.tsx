@@ -34,7 +34,7 @@ const features = [
   }
 ]
 
-export function Features() {
+export default function Features() {
   return (
     <section className="py-20">
       <div className="w-full">

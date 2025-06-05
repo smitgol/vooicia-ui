@@ -2,10 +2,12 @@
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 
-export function Hero() {
+export default function Hero() {
   const phrases = ["Lead qualification", "HR interview", "feedback"]
   const [currentIndex, setCurrentIndex] = useState(0)
+  const router = useRouter()
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -44,7 +46,7 @@ export function Hero() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="font-bold cursor-pointer text-lg px-8 py-6 hover:from-purple-700 hover:to-blue-800 transition-all">
+            <Button size="lg" className="font-bold cursor-pointer text-lg px-8 py-6 hover:from-purple-700 hover:to-blue-800 transition-all" onClick={() => router.push("#demo")}>
               Try It Now - It&apos;s Free
             </Button>
 

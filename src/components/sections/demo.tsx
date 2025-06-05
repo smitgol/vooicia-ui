@@ -13,19 +13,69 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { getPromptsByAssistant } from "@/prompts/demoPrompts";
+import { removeCountryCode } from "@/utils/phone";
 
-export function Demo() {
+export default function Demo() {
+
+  const assistants = {
+    "en": {
+      "hr_interview": "HR Interview",
+      "lead_qualification": "Lead Qualification",
+      "feedback": "Feedback",
+    },
+    "hi": {
+      "lead_qualification_hindi": "Lead Qualification (Hindi)",
+      "feedback_hindi": "Feedback (Hindi)",
+    }
+  };
+
   const [isCalling, setIsCalling] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
+  const [phoneNumber, setPhoneNumber] = useState("")
+  const [selectedAssistant, setSelectedAssistant] = useState("hr_interview");
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const startCall = () => {
     setIsProcessing(true);
     // Simulate call connection
     setTimeout(() => {
-      setIsProcessing(false);
       setIsCalling(true);
+      callAgent();
     }, 1500);
   };
+
+  const callAgent = () => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        to_number: "+91" + removeCountryCode(phoneNumber),
+        prompt: getPromptsByAssistant(selectedAssistant)[0].content,
+        language: getPromptsByAssistant(selectedAssistant)[0].language
+      }),
+    };
+
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/start_call`, options)
+      .then((res) => {
+        setTimeout(() => {
+          setIsCalling(false);
+          setIsProcessing(false);
+        }, 5000);
+        return res.json()
+        })
+      .then((data) => console.log(data))
+      .catch((err) => {
+        setIsCalling(false);
+        setIsProcessing(false);
+        console.log(err);
+        setError(true);
+        setErrorMessage("Something went wrong. Please try again later.");
+      });
+  }
 
   // Animation variants
   const containerVariants = {
@@ -66,19 +116,6 @@ export function Demo() {
     }
   };
 
-  const [selectedAssistant, setSelectedAssistant] = useState("hr_interview");
-  const assistants = {
-    "en": {
-      "hr_interview": "HR Interview",
-      "lead_qualification": "Lead Qualification",
-      "feedback": "Feedback",
-    },
-    "hi": {
-      "lead_qualification_hindi": "Lead Qualification (Hindi)",
-      "feedback_hindi": "Feedback (Hindi)",
-    }
-  };
-
   return (
     <section className="py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-grid-white/[0.03] [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]" />
@@ -101,6 +138,15 @@ export function Demo() {
           transition={{ duration: 0.3 }}
         >
           <div className="bg-background rounded-xl p-6">
+          {error && (
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-600"
+              >
+                {errorMessage}
+              </motion.div>
+            )}
             <div className="flex items-center justify-center h-80 relative">
               <AnimatePresence mode="wait">
                 {!isCalling ? (
@@ -141,6 +187,8 @@ export function Demo() {
                         type="text" 
                         placeholder="Enter your phone number" 
                         className="text-lg py-4 my-4"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
                       />
                     </motion.div>
                     
