@@ -7,7 +7,7 @@ const agent = new https.Agent({ rejectUnauthorized: false });
 export async function POST(request: NextRequest) {
     try {
         const { prompt, language, to_number } = await request.json();
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/start_call`, {
+        await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/start_call`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
