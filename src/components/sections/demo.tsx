@@ -59,7 +59,7 @@ export default function Demo() {
       }),
     };
 
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/start_call`, options)
+    fetch('/api/call', options)
       .then((res) => {
         setTimeout(() => {
           setIsCalling(false);
