@@ -26,3 +26,8 @@ export const removeCountryCode = (phoneNumber: string): string => {
   
   return cleaned;
 };
+
+export const validatePhoneNumber = (phone: string): boolean => {
+  const digitsOnly = phone.replace(/\D/g, '');
+  return digitsOnly.length >= 10;
+};

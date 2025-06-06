@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import https from "https";
 import fetch from "node-fetch";
+import { rateLimit } from "@/utils/rateLimiter";
 
 const agent = new https.Agent({ rejectUnauthorized: false });
 
 export async function POST(request: NextRequest) {
     try {
+        const response = rateLimit(2, 60 * 1000)(request);
+        if (response.status !== 200) {
+            return response;
+        }
         const { prompt, language, to_number } = await request.json();
         await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/start_call`, {
             method: "POST",

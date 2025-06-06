@@ -14,7 +14,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { getPromptsByAssistant } from "@/prompts/demoPrompts";
-import { removeCountryCode } from "@/utils/phone";
+import { removeCountryCode, validatePhoneNumber  } from "@/utils/phone";
+import { X } from "lucide-react"
 
 export default function Demo() {
 
@@ -41,39 +42,53 @@ export default function Demo() {
     setIsProcessing(true);
     // Simulate call connection
     setTimeout(() => {
-      setIsCalling(true);
       callAgent();
     }, 1500);
   };
 
   const callAgent = () => {
+    // Validate phone number
+    if (!validatePhoneNumber(phoneNumber)) {
+      setError(true);
+      setErrorMessage('Phone number must be at least 10 digits');
+      setIsProcessing(false);
+      return;
+    }
+
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        to_number: "+91" + removeCountryCode(phoneNumber),
         prompt: getPromptsByAssistant(selectedAssistant)[0].content,
-        language: getPromptsByAssistant(selectedAssistant)[0].language
-      }),
+        language: selectedAssistant.split("_")[0],
+        to_number: "+91" + removeCountryCode(phoneNumber),
+      })
     };
 
     fetch('/api/call', options)
       .then((res) => {
-        setTimeout(() => {
-          setIsCalling(false);
-          setIsProcessing(false);
-        }, 5000);
         return res.json()
         })
-      .then((data) => console.log(data))
+      .then((data) => {
+        setIsProcessing(false);
+        if (!data.success) {
+          setError(true);
+          setErrorMessage(data.message);
+        }
+        else {
+          setIsCalling(true);
+          setTimeout(() => {
+            setIsCalling(false);
+          }, 5000);
+        }
+      })
       .catch((err) => {
         setIsCalling(false);
         setIsProcessing(false);
-        console.log(err);
         setError(true);
-        setErrorMessage("Something went wrong. Please try again later.");
+        setErrorMessage(err.message);
       });
   }
 
@@ -142,9 +157,10 @@ export default function Demo() {
               <motion.div 
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-600"
+                className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-600 flex items-center justify-between"
               >
-                {errorMessage}
+                <p>{errorMessage}</p>
+                <Button onClick={() => setError(false)} className="text-white bg-transparent border-0 hover:bg-transparent hover:text-white cursor-pointer text-lg"><X /></Button>
               </motion.div>
             )}
             <div className="flex items-center justify-center h-80 relative">
