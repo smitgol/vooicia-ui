@@ -62,7 +62,7 @@ export default function Demo() {
       },
       body: JSON.stringify({
         prompt: getPromptsByAssistant(selectedAssistant)[0].content,
-        language: selectedAssistant.split("_")[0],
+        language: getPromptsByAssistant(selectedAssistant)[0].language,
         to_number: "+91" + removeCountryCode(phoneNumber),
       })
     };
