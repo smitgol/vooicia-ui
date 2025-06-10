@@ -64,6 +64,7 @@ export default function Demo() {
         prompt: getPromptsByAssistant(selectedAssistant)[0].content,
         language: getPromptsByAssistant(selectedAssistant)[0].language,
         to_number: "+91" + removeCountryCode(phoneNumber),
+        voice_id: getPromptsByAssistant(selectedAssistant)[0].voice_id,
       })
     };
 
