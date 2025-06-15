@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
         if (response.status !== 200) {
             return response;
         }
-        const { prompt, language, to_number } = await request.json();
+        const { prompt, language, to_number, voice_id } = await request.json();
         await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/start_call`, {
             method: "POST",
             headers: {
@@ -21,6 +21,7 @@ export async function POST(request: NextRequest) {
                 prompt,
                 language,
                 to_number,
+                voice_id,
             }),
             agent,
         })

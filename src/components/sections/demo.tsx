@@ -23,11 +23,11 @@ export default function Demo() {
     "en": {
       "hr_interview": "HR Interview",
       "lead_qualification": "Lead Qualification",
-      "feedback": "Feedback",
+      //"feedback": "Feedback",
     },
     "hi": {
       "lead_qualification_hindi": "Lead Qualification (Hindi)",
-      "feedback_hindi": "Feedback (Hindi)",
+      //"feedback_hindi": "Feedback (Hindi)",
     }
   };
 
