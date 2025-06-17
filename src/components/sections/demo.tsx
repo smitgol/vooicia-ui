@@ -34,7 +34,7 @@ export default function Demo() {
   const [isCalling, setIsCalling] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
   const [phoneNumber, setPhoneNumber] = useState("")
-  const [selectedAssistant, setSelectedAssistant] = useState("hr_interview");
+  const [selectedAssistant, setSelectedAssistant] = useState("lead_qualification");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
