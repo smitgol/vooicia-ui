@@ -5,7 +5,7 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 
 export default function Hero() {
-  const phrases = ["HR interview", "feedback"]
+  const phrases = ["Lead Qualification"]
   const [currentIndex, setCurrentIndex] = useState(0)
   const router = useRouter()
   

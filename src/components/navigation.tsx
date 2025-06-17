@@ -30,17 +30,17 @@ export function Navigation() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full mx-auto ${isScrolled ? 'bg-background/90 shadow-sm' : 'bg-background/80'} backdrop-blur-md`}
     >
       <div className="container mx-auto py-4 flex flex-col justify-center md:max-w-[80%] max-w-[90%] gap-4 sm:gap-8">
-        <div className={`flex items-center justify-between w-full flex`}>
+        <div className={`flex items-center justify-between w-full`}>
           {/* Logo */}
           <div className="w-full flex justify-between">
             
           <Link href="/" className="flex items-center gap-2">
             <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-800 bg-clip-text text-transparent">
-              Vooicia
+              Voocia
             </span>
           </Link>
           <button 
-            className="md:hidden p-2 rounded-md text-foreground/80 hover:text-foreground transition-colors md:hidden cursor-pointer"
+            className="p-2 rounded-md text-foreground/80 hover:text-foreground transition-colors md:hidden cursor-pointer"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >

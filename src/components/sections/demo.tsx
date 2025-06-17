@@ -21,7 +21,7 @@ export default function Demo() {
 
   const assistants = {
     "en": {
-      "hr_interview": "HR Interview",
+      //"hr_interview": "HR Interview",
       "lead_qualification": "Lead Qualification",
       //"feedback": "Feedback",
     },
