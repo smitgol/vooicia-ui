@@ -76,7 +76,7 @@ export default function Contact() {
     });
 
     try {
-      const { data } = await axios.post("/api/contact", formData, {
+      await axios.post("/api/contact", formData, {
         headers: {
           "Content-Type": "application/json",
         },

@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence, useAnimation } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { Card, CardContent } from "@/components/ui/card"
-import { Loader2, MessageSquare, Mic, VolumeX, Zap } from "lucide-react"
+import { Loader2, MessageSquare, Mic, Zap } from "lucide-react"
 
 import {
   RTVIClient,
@@ -13,8 +13,7 @@ import {
 import {
   WebSocketTransport
 } from "@pipecat-ai/websocket-transport";
-import axios from "axios";
-import { demoPrompts, getPromptById } from "@/prompts/demoPrompts";
+import { getPromptById } from "@/prompts/demoPrompts";
 
 interface Assistant {
   id: string;
@@ -78,23 +77,13 @@ const VoiceWave = ({ isActive }: { isActive: boolean }) => {
 export default function Demo() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
   const [selectedAssistant, setSelectedAssistant] = useState(ASSISTANTS[0].id);
-  const [volume, setVolume] = useState(70);
   const [error, setError] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState("");
 
   //states to handle assistant
   const [rtviClient, setRtviClient] = useState<RTVIClient | null>(null);
-  const [connectBtn, setConnectBtn] = useState<HTMLButtonElement | null>(null);
-  const [disconnectBtn, setDisconnectBtn] = useState<HTMLButtonElement | null>(null);
-  const [statusSpan, setStatusSpan] = useState<HTMLElement | null>(null);
-  const [debugLog, setDebugLog] = useState<HTMLElement | null>(null);
   const botAudioRef = useRef<HTMLAudioElement | null>(null);
-  const [sessionId, setSessionId] = useState<string | null>(null);
 
-  const selectedAssistantData = ASSISTANTS.find(a => a.id === selectedAssistant) || ASSISTANTS[0];
 
   useEffect(() => {
     const botAudio = document.createElement('audio');
@@ -175,6 +164,7 @@ export default function Demo() {
             setIsProcessing(false);
           },
           onBotReady: (data) => {
+            console.log('Bot ready', data);
             setUpMediaTracks();
           },
           onUserTranscript: (data) => {
@@ -185,6 +175,7 @@ export default function Demo() {
           onBotTranscript: (data) => console.log(`Bot: ${data.text}`),
           onMessageError: (error) => {
             console.error('Message error:', error);
+            setError('An error occurred during the call');
             setIsProcessing(false);
           },
           onError: (error) => {

@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
+import { Card, CardTitle } from "@/components/ui/card"
 import { ArrowRight, Clock, Calendar } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
