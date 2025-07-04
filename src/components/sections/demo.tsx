@@ -1,280 +1,358 @@
 "use client"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Phone, Loader2 } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence, useAnimation } from "framer-motion"
+import { cn } from "@/lib/utils"
+import { Card, CardContent } from "@/components/ui/card"
+import { Loader2, MessageSquare, Mic, VolumeX, Zap } from "lucide-react"
+
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { getPromptsByAssistant } from "@/prompts/demoPrompts";
-import { removeCountryCode, validatePhoneNumber  } from "@/utils/phone";
-import { X } from "lucide-react"
+  RTVIClient,
+  RTVIClientOptions,
+  RTVIEvent,
+} from '@pipecat-ai/client-js';
+import {
+  WebSocketTransport
+} from "@pipecat-ai/websocket-transport";
+import axios from "axios";
+import { demoPrompts, getPromptById } from "@/prompts/demoPrompts";
+
+interface Assistant {
+  id: string;
+  name: string;
+  description: string;
+  icon: React.ReactNode;
+  color: string;
+  language: string;
+}
+
+const ASSISTANTS: Assistant[] = [
+  {
+    id: "customer_support",
+    name: "Customer Support",
+    description: "24/7 AI customer support assistant",
+    icon: <MessageSquare className="w-5 h-5 text-white" />,
+    color: "from-violet-300 to-violet-500",
+    language: "en"
+  },
+];
+
+const VoiceWave = ({ isActive }: { isActive: boolean }) => {
+  const bars = Array(5).fill(0);
+  const controls = useAnimation();
+
+  useEffect(() => {
+    if (isActive) {
+      const animateBars = async () => {
+        while (isActive) {
+          await controls.start({
+            scaleY: [1, 1.5, 1],
+            transition: {
+              duration: 0.8,
+              repeat: Infinity,
+              repeatType: "reverse"
+            }
+          });
+        }
+      };
+      animateBars();
+    } else {
+      controls.stop();
+    }
+  }, [isActive, controls]);
+
+  return (
+    <div className="flex items-end h-12 gap-1">
+      {bars.map((_, i) => (
+        <motion.div
+          key={i}
+          className="w-1.5 bg-gradient-to-t from-indigo-500 to-purple-500 rounded-full"
+          style={{ height: `${20 + Math.random() * 30}%` }}
+          animate={isActive ? controls : { scaleY: 1 }}
+          transition={{ duration: 0.3, delay: i * 0.05 }}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default function Demo() {
-
-  const assistants = {
-    "en": {
-      //"hr_interview": "HR Interview",
-      "lead_qualification": "Lead Qualification",
-      //"feedback": "Feedback",
-    },
-    "hi": {
-      "lead_qualification_hindi": "Lead Qualification (Hindi)",
-      //"feedback_hindi": "Feedback (Hindi)",
-    }
-  };
-
-  const [isCalling, setIsCalling] = useState(false)
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [phoneNumber, setPhoneNumber] = useState("")
-  const [selectedAssistant, setSelectedAssistant] = useState("lead_qualification");
-  const [error, setError] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [selectedAssistant, setSelectedAssistant] = useState(ASSISTANTS[0].id);
+  const [volume, setVolume] = useState(70);
+  const [error, setError] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const startCall = () => {
-    setIsProcessing(true);
-    // Simulate call connection
-    setTimeout(() => {
-      callAgent();
-    }, 1500);
-  };
+  //states to handle assistant
+  const [rtviClient, setRtviClient] = useState<RTVIClient | null>(null);
+  const [connectBtn, setConnectBtn] = useState<HTMLButtonElement | null>(null);
+  const [disconnectBtn, setDisconnectBtn] = useState<HTMLButtonElement | null>(null);
+  const [statusSpan, setStatusSpan] = useState<HTMLElement | null>(null);
+  const [debugLog, setDebugLog] = useState<HTMLElement | null>(null);
+  const botAudioRef = useRef<HTMLAudioElement | null>(null);
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
-  const callAgent = () => {
-    // Validate phone number
-    if (!validatePhoneNumber(phoneNumber)) {
-      setError(true);
-      setErrorMessage('Phone number must be at least 10 digits');
-      setIsProcessing(false);
-      return;
-    }
+  const selectedAssistantData = ASSISTANTS.find(a => a.id === selectedAssistant) || ASSISTANTS[0];
 
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        prompt: getPromptsByAssistant(selectedAssistant)[0].content,
-        language: getPromptsByAssistant(selectedAssistant)[0].language,
-        to_number: "+91" + removeCountryCode(phoneNumber),
-        voice_id: getPromptsByAssistant(selectedAssistant)[0].voice_id,
-      })
-    };
-
-    fetch('/api/call', options)
-      .then((res) => {
-        return res.json()
-        })
-      .then((data) => {
-        setIsProcessing(false);
-        if (!data.success) {
-          setError(true);
-          setErrorMessage(data.message);
-        }
-        else {
-          setIsCalling(true);
-          setTimeout(() => {
-            setIsCalling(false);
-          }, 5000);
-        }
-      })
-      .catch((err) => {
-        setIsCalling(false);
-        setIsProcessing(false);
-        setError(true);
-        setErrorMessage(err.message);
-      });
-  }
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: { 
-      opacity: 1, 
-      scale: 1,
-      transition: { 
-        type: "spring", 
-        stiffness: 300, 
-        damping: 20 
-      } 
-    },
-    exit: { 
-      opacity: 0, 
-      scale: 0.95,
-      transition: { 
-        duration: 0.2 
-      } 
-    }
-  };
+  useEffect(() => {
+    const botAudio = document.createElement('audio');
+    botAudio.autoplay = true;
+    botAudioRef.current = botAudio;
+    document.body.appendChild(botAudio);
+  }, [])
 
   const buttonVariants = {
     initial: { scale: 1 },
-    hover: { 
+    hover: {
       scale: 1.05,
-      transition: { 
-        type: "spring", 
-        stiffness: 400, 
-        damping: 15 
-      } 
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 15
+      }
     },
-    tap: { 
-      scale: 0.98,
-      transition: { 
-        duration: 0.1 
-      } 
+    tap: {
+      scale: 0.95,
+      transition: { duration: 0.1 }
     }
   };
 
+  const setUpMediaTracks = () => {
+    const tracks = rtviClient?.tracks();
+    if (tracks?.bot?.audio) {
+      setupAudioTrack(tracks.bot.audio);
+    }
+  }
+
+  const setupTrackListeners = () => {
+    if (!rtviClient) return;
+    rtviClient.on(RTVIEvent.TrackStarted, (track, participant) => {
+      // Only handle non-local (bot) tracks
+      if (!participant?.local && track.kind === 'audio') {
+        setupAudioTrack(track);
+      }
+    });
+  }
+
+  const setupAudioTrack = (track: MediaStreamTrack) => {
+    console.log('Setting up audio track', track)
+    if (!botAudioRef.current) return;
+    if (botAudioRef.current.srcObject && "getAudioTracks" in botAudioRef.current.srcObject) {
+      const oldTrack = botAudioRef.current.srcObject.getAudioTracks()[0];
+      if (oldTrack?.id === track.id) return;
+    }
+    botAudioRef.current.srcObject = new MediaStream([track]);
+  }
+
+  const connectToAssistant = async () => {
+    setIsProcessing(true);
+    const prompt = getPromptById(selectedAssistant);
+    try {
+      const transport = new WebSocketTransport();
+      const RTVIConfig: RTVIClientOptions = {
+        transport,
+        params: {
+          baseUrl: process.env.NEXT_PUBLIC_SERVER_URL,
+          endpoints: { connect: "/create_voice_assistant_session" },
+          requestData: {
+            prompt: prompt?.content,
+            language: prompt?.language,
+            voice_id: prompt?.voice_id,
+            initial_message: prompt?.initial_message,
+          }
+        },
+        enableMic: true,
+        enableCam: false,
+        callbacks: {
+          onConnected: () => {
+            setIsRecording(true);
+            setIsProcessing(false);
+          },
+          onDisconnected: () => {
+            setIsRecording(false);
+            setIsProcessing(false);
+          },
+          onBotReady: (data) => {
+            setUpMediaTracks();
+          },
+          onUserTranscript: (data) => {
+            if (data.final) {
+              console.log(`User: ${data.text}`);
+            }
+          },
+          onBotTranscript: (data) => console.log(`Bot: ${data.text}`),
+          onMessageError: (error) => {
+            console.error('Message error:', error);
+            setIsProcessing(false);
+          },
+          onError: (error) => {
+            console.error('Error:', error);
+            setError('Failed to connect to assistant');
+            setIsProcessing(false);
+          },
+        },
+      };
+      const client = new RTVIClient(RTVIConfig);
+      setupTrackListeners();
+      await client.initDevices();
+      await client.connect();
+      setRtviClient(client);
+    } catch (error) {
+      console.error('Connection error:', error);
+      setError('Failed to initialize assistant connection');
+      setIsProcessing(false);
+    }
+  }
+
+  const disconnectAssistant = async () => {
+    console.log('Disconnecting from assistant...');
+    setIsProcessing(true);
+    try {
+      await rtviClient?.disconnect();
+      setRtviClient(null);
+      console.log('Bot audio srcObject', botAudioRef.current?.srcObject)
+      if (botAudioRef.current?.srcObject && "getAudioTracks" in botAudioRef.current.srcObject) {
+        botAudioRef.current.srcObject.getAudioTracks().forEach((track) => track.stop())
+        botAudioRef.current.srcObject = null;
+      }
+      setIsRecording(false);
+      setIsProcessing(false);
+    } catch (error) {
+      console.error('Disconnection error:', error);
+      setError('Failed to disconnect from assistant');
+      setIsProcessing(false);
+    }
+  }
+
   return (
-    <section className="py-20 relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid-white/[0.03] [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]" />
-      
-      <div className="w-full relative z-10">
+    <section className="relative pt-16">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-1/2 left-1/2 w-[120%] h-[120%] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-indigo-500/5 to-transparent"></div>
+        <div className="absolute inset-0 bg-grid-white/[0.02] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+      </div>
+
+      <div className="container relative z-10 px-4 mx-auto sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="max-w-3xl mx-auto text-center"
         >
-          <h2 className="text-4xl font-bold mb-4">Experience the <span className="text-primary">Power</span> of AI</h2>
-          <p className="text-xl text-muted-foreground">Try our AI call agent in action - no signup required</p>
+          <div className="inline-block px-4 py-2 text-sm font-medium bg-violet-100 text-violet-600 rounded-full mb-4">
+            <div className="flex items-center">
+              <Zap className="w-4 h-4 mr-2" />
+              AI Voice Assistant Demo
+            </div>
+          </div>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
+            Experience the Future of Voice AI
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Interact with our AI assistant using natural voice commands. Try it out below!
+          </p>
         </motion.div>
-        
+
         <motion.div 
-          className="bg-gradient-to-br from-background to-muted/20 border border-border/50 rounded-2xl p-1 max-w-2xl mx-auto"
-          whileHover={{ boxShadow: '0 0 30px rgba(59, 130, 246, 0.1)' }}
-          transition={{ duration: 0.3 }}
+          className="max-w-4xl mx-auto my-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <div className="bg-background rounded-xl p-6">
-          {error && (
-              <motion.div 
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-600 flex items-center justify-between"
-              >
-                <p>{errorMessage}</p>
-                <Button onClick={() => setError(false)} className="text-white bg-transparent border-0 hover:bg-transparent hover:text-white cursor-pointer text-lg"><X /></Button>
-              </motion.div>
-            )}
-            <div className="flex items-center justify-center h-80 relative">
-              <AnimatePresence mode="wait">
-                {!isCalling ? (
-                  <motion.div 
-                    key="start"
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className="flex flex-col items-center justify-center gap-10 w-full"
+          <Card className="overflow-hidden shadow-none md:max-w-sm max-w-md mx-auto border-0">
+            <CardContent className="pt-8 pb-12">
+              <div className="flex flex-col items-center justify-center">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={selectedAssistant}
+                    className="flex flex-col items-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <motion.div 
-                      className="w-full max-w-xs"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <Select onValueChange={setSelectedAssistant} value={selectedAssistant}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select Assistant"  />
-                        </SelectTrigger>
-                        <SelectContent >
-                          <SelectGroup>
-                            <SelectLabel>English</SelectLabel>
-                            {Object.entries(assistants.en).map(([value, label]) => (
-                              <SelectItem key={value} value={value}>{label}</SelectItem>
-                            ))}
-                          </SelectGroup>
-                          <SelectGroup>
-                            <SelectLabel>Hindi</SelectLabel>
-                            {Object.entries(assistants.hi).map(([value, label]) => (
-                              <SelectItem key={value} value={value}>{label}</SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                      <Input 
-                        type="text" 
-                        placeholder="Enter your phone number" 
-                        className="text-lg py-4 my-4"
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                      />
-                    </motion.div>
-                    
+                    <div className="w-full mb-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-1 gap-2">
+                        {ASSISTANTS.map((assistant) => (
+                          <motion.div
+                            key={assistant.id}
+                            className={cn(
+                              "relative p-4 rounded-lg border cursor-pointer transition-all duration-200",
+                              selectedAssistant === assistant.id
+                                ? "border-primary/30 bg-primary/2"
+                                : "border-border/40 hover:border-border/60 hover:bg-accent/30"
+                            )}
+                            onClick={() => setSelectedAssistant(assistant.id)}
+                            whileHover={{ y: -2 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            <div className="flex items-center gap-3">
+                              <div
+                                className={cn(
+                                  "flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center",
+                                  `bg-violet-500`
+                                )}
+                              >
+                                {assistant.icon}
+                              </div>
+                              <div className="text-left">
+                                <h4 className="font-medium text-foreground">
+                                  {assistant.name}
+                                </h4>
+                                <p className="text-xs text-muted-foreground">
+                                  {assistant.language === 'hi' ? 'हिंदी' : 'English'}
+                                </p>
+                              </div>
+                            </div>
+                            {selectedAssistant === assistant.id && (
+                              <div className="absolute top-2 right-2">
+                                <div className="w-2 h-2 bg-primary rounded-full animate-ping"></div>
+                              </div>
+                            )}
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Voice Wave Visualization */}
+                    <div className="w-full flex justify-center h-16">
+                      {isRecording && (
+                        <VoiceWave isActive={isRecording} />
+                      )}
+                    </div>
+
+                    {/* Record Button */}
                     <motion.button
-                      key="start-circle"
+                      onClick={isRecording ? disconnectAssistant : connectToAssistant}
+                      disabled={isProcessing}
+                      className={cn(
+                        "relative flex items-center justify-center w-20 h-20 rounded-full text-white shadow-lg transition-all duration-300 cursor-pointer",
+                        "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-background",
+                        isProcessing ? "bg-violet-400 cursor-not-allowed" : "bg-violet-500 hover:bg-violet-600",
+                        isRecording ? "animate-pulse" : ""
+                      )}
                       variants={buttonVariants}
                       initial="initial"
-                      whileHover="hover"
-                      whileTap="tap"
-                      className="w-40 h-40 rounded-full bg-primary/10 flex items-center justify-center relative overflow-hidden outline-none focus:ring-2 focus:ring-primary/50"
-                      onClick={startCall}
-                      disabled={isProcessing}
+                      whileHover={!isProcessing ? "hover" : undefined}
+                      whileTap={!isProcessing ? "tap" : undefined}
                     >
                       {isProcessing ? (
-                        <Loader2 className="w-10 h-10 text-primary animate-spin" />
+                        <Loader2 className="w-8 h-8 animate-spin" />
+                      ) : isRecording ? (
+                        <div className="w-6 h-6 bg-white rounded-sm"></div>
                       ) : (
-                        <>
-                          <motion.div 
-                            className="absolute w-full h-full rounded-full border-2 border-primary/30"
-                            animate={{ 
-                              scale: [1, 1.1, 1], 
-                              opacity: [1, 0.5, 1] 
-                            }}
-                            transition={{ 
-                              duration: 2, 
-                              repeat: Infinity, 
-                              ease: "easeInOut" 
-                            }}
-                          />
-                          <motion.div 
-                            className="absolute w-full h-full rounded-full border border-primary/20"
-                            animate={{ 
-                              scale: [1, 1.2, 1], 
-                              opacity: [1, 0.3, 1] 
-                            }}
-                            transition={{ 
-                              duration: 2.5, 
-                              repeat: Infinity, 
-                              ease: "easeInOut", 
-                              delay: 0.2 
-                            }}
-                          />
-                          <div className="z-10 flex flex-col items-center justify-center">
-                            <Phone className="w-8 h-8 text-primary mb-2" />
-                            <span className="font-medium text-primary text-lg cursor-pointer">Start Demo</span>
-                          </div>
-                        </>
+                        <Mic className="w-8 h-8 my-0"/>
                       )}
                     </motion.button>
                   </motion.div>
-                ) : (
-                  <p>you will have receive a call from our AI call agent</p>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        </motion.div>
-        
-        <motion.div 
-          className="mt-12 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ delay: 0.2 }}
-        >
-          <p className="text-muted-foreground mb-6">Ready to implement this in your business?</p>
-          <Button size="lg" className="cursor-pointer" onClick={() => window.location.href = "#contact"}>
-            Contact Us
-          </Button>
+                </AnimatePresence>
+              </div>
+            </CardContent>
+          </Card>
         </motion.div>
       </div>
     </section>

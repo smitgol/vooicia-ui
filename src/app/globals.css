@@ -43,8 +43,9 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+
 :root {
-  --radius: 0.75rem;
+  --radius: 0.65rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
@@ -112,6 +113,8 @@
   --sidebar-ring: oklch(0.541 0.281 293.009);
 }
 
+
+
 /* Smooth scrolling with delay */
 html {
   scroll-behavior: smooth;
@@ -120,6 +123,31 @@ html {
   scroll-snap-type: y proximity;
   scroll-behavior: smooth;
   scroll-snap-stop: always;
+}
+
+/* Rolling animations */
+@keyframes roll {
+  0% { transform: rotate(0deg) translateX(0) translateY(0); }
+  25% { transform: rotate(90deg) translateX(20px) translateY(20px); }
+  50% { transform: rotate(180deg) translateX(0) translateY(40px); }
+  75% { transform: rotate(270deg) translateX(-20px) translateY(20px); }
+  100% { transform: rotate(360deg) translateX(0) translateY(0); }
+}
+
+@keyframes rollReverse {
+  0% { transform: rotate(0deg) translateX(0) translateY(0); }
+  25% { transform: rotate(-90deg) translateX(-20px) translateY(20px); }
+  50% { transform: rotate(-180deg) translateX(0) translateY(40px); }
+  75% { transform: rotate(-270deg) translateX(20px) translateY(20px); }
+  100% { transform: rotate(-360deg) translateX(0) translateY(0); }
+}
+
+.animate-roll {
+  animation: roll 0.7s linear infinite;
+}
+
+.animate-roll-reverse {
+  animation: rollReverse 0.7s linear infinite;
 }
 
 /* Custom scroll behavior with delay */

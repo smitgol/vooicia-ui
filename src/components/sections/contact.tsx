@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useState, FormEvent, ChangeEvent } from "react"
 import { motion } from "framer-motion"
+import axios from "axios"
 
 interface FormData {
   name: string;
@@ -73,6 +74,27 @@ export default function Contact() {
       isError: false,
       message: "Sending your message..."
     });
+
+    try {
+      const { data } = await axios.post("/api/contact", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setStatus({
+        isSubmitting: false,
+        isSuccess: true,
+        isError: false,
+        message: "Message sent successfully! We'll get back to you soon."
+      });
+    } catch (error: unknown) {
+      setStatus({
+        isSubmitting: false,
+        isSuccess: false,
+        isError: true,
+        message: `Something went wrong. Please try again later. ${error}`
+      });
+    }
 
     try {
       const response = await fetch("/api/contact", {
@@ -259,7 +281,7 @@ export default function Contact() {
               
               <Button 
                 type="submit" 
-                className="w-full cursor-pointer"
+                className="w-full cursor-pointer bg-violet-500 hover:bg-violet-600"
                 disabled={status.isSubmitting}
               >
                 {status.isSubmitting ? (

@@ -22,6 +22,9 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  images: {
+    remotePatterns: [new URL('https://www.pillowcube.com/cdn/shop/files/**'), new URL('https://cdn.gymshark.com/images/branding/gs-icon-text.svg')],
+  },
 };
 
 export default nextConfig;
