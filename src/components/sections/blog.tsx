@@ -1,0 +1,161 @@
+"use client"
+
+import { Card, CardTitle } from "@/components/ui/card"
+import { ArrowRight, Clock, Calendar } from "lucide-react"
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { cn } from "@/lib/utils"
+
+interface BlogPost {
+  id: string
+  title: string
+  description: string
+  url: string
+  imageUrl: string
+  imageAlt: string
+  readTime: string
+  date: string
+  category: string
+}
+
+const BLOG_POSTS: BlogPost[] = [
+  {
+    id: "1",
+    title: "Case Study: Automating Ecommerce Support with AI Voice Agents",
+    description: "Learn how AI voice agents can transform your business with real-world examples, from automated order confirmations to instant refund processing and beyond.",
+    url: "https://medium.com/@smitgol007/from-order-updates-to-instant-refunds-ai-voice-agents-in-action-0b3f7cfccf18",
+    imageUrl: "https://image.lexica.art/full_webp/2b4c19f5-bbfa-4ed4-864e-9b9ef5853712",
+    imageAlt: "AI Voice Agent in Action",
+    readTime: "5 min read",
+    date: "July 3, 2025",
+    category: "AI Technology"
+  }
+]
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+}
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1]
+    }
+  }
+}
+
+export default function Blog() {
+  return (
+    <section className="bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950 py-16 md:py-24 lg:py-32">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
+          <span className="inline-block px-3 py-1 text-sm font-medium rounded-full bg-primary/10 text-primary mb-4">
+            Case Studies
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 mb-4">
+            Our Case Studies
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400">
+            Discover the case studies of our platform and the AI industry.
+          </p>
+        </motion.div>
+        
+        <motion.div 
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+        >
+          {BLOG_POSTS.map((post) => (
+            <motion.div key={post.id} variants={item}>
+              <Card className="group h-full flex flex-col overflow-hidden bg-white dark:bg-gray-800/50 backdrop-blur-sm border border-gray-100 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" onClick={() => window.open(post.url, '_blank')}>
+                <div className="relative h-56 w-full overflow-hidden">
+                  <img 
+                    src={post.imageUrl} 
+                    alt={post.imageAlt}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <span className="px-3 py-1 text-xs font-medium rounded-full bg-primary text-white">
+                      {post.category}
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="flex-1 flex flex-col p-6">
+                  <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-3 space-x-4">
+                    <span className="flex items-center">
+                      <Calendar className="w-3.5 h-3.5 mr-1" />
+                      {post.date}
+                    </span>
+                    <span>•</span>
+                    <span className="flex items-center">
+                      <Clock className="w-3.5 h-3.5 mr-1" />
+                      {post.readTime}
+                    </span>
+                  </div>
+                  
+                  <CardTitle className="text-xl font-bold leading-snug tracking-tight mb-3 group-hover:text-primary transition-colors">
+                    {post.title}
+                  </CardTitle>
+                  
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 flex-grow">
+                    {post.description}
+                  </p>
+                  
+                  <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+                    <Link 
+                      href={post.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-sm font-medium text-primary group-hover:text-primary/80 transition-colors"
+                    >
+                      Read full article
+                      <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </motion.div>
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          viewport={{ once: true }}
+          className="mt-16 text-center"
+        >
+          <Link 
+            href="#" 
+            className={cn(
+              "inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-full text-white bg-gradient-to-r from-primary to-primary/90",
+              "hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-0.5 transition-all duration-300",
+              "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50"
+            )}
+          >
+            View All Articles
+          </Link>
+        </motion.div>
+      </div>
+    </section>
+  )
+}

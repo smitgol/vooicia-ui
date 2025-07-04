@@ -44,13 +44,13 @@ export default function RootLayout({
       <body className={`font-sans min-h-screen bg-background antialiased text-foreground overflow-x-hidden`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem={false}
           disableTransitionOnChange
         >
           <MotionProvider>
             <Navigation />
-            <main className="pt-20 md:max-w-[80%] max-w-[95%] w-full mx-auto">
+            <main className="pt-15 w-full mx-auto">
               {children}
             </main>
           </MotionProvider>

@@ -12,7 +12,7 @@ export function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
+      setIsScrolled(window.scrollY > 20)
     }
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
@@ -21,30 +21,29 @@ export function Navigation() {
   const navLinks = [
     { name: "Features", href: "#features" },
     { name: "Demo", href: "#demo" },
-    //{ name: "Testimonials", href: "#testimonials" },
-    { name: "Contact", href: "#contact" },
+    { name: "Case studies", href: "/case-studies" },
   ]
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full mx-auto ${isScrolled ? 'bg-background/90 shadow-sm' : 'bg-background/80'} backdrop-blur-md`}
+      className={`fixed w-4/5 md:w-1/2 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ${isScrolled ? 'top-4 w-1/2 bg-transparent backdrop-blur-md shadow-sm rounded-4xl' : 'top-2 w-full md:w-4/5 bg-white/80 backdrop-blur-sm'}`}
     >
-      <div className="container mx-auto py-4 flex flex-col justify-center md:max-w-[80%] max-w-[90%] gap-4 sm:gap-8">
+      <div className="container mx-auto py-1.5 px-6 flex flex-col justify-center gap-1 sm:gap-2">
         <div className={`flex items-center justify-between w-full`}>
           {/* Logo */}
-          <div className="w-full flex justify-between">
+          <div className="flex justify-between">
             
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-800 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
               Voocia
             </span>
           </Link>
           <button 
-            className="p-2 rounded-md text-foreground/80 hover:text-foreground transition-colors md:hidden cursor-pointer"
+            className="p-1.5 rounded-md text-foreground/80 hover:text-foreground transition-colors md:hidden cursor-pointer"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
           </div>
 
@@ -55,12 +54,12 @@ export function Navigation() {
               <Link 
                 key={link.name}
                 href={link.href}
-                className="text-foreground/80 hover:text-foreground transition-colors font-medium"
+                className="text-gray-600 hover:text-foreground hover:bg-gray-200 hover:rounded-lg p-2 px-3 transition-colors font-medium hover:delay-600 hover:duration-300 hover:ease-in-out"
               >
                 {link.name}
               </Link>
             ))}
-            <Button className="ml-4 font-bold cursor-pointer hover:scale-105 transition delay-200 duration-300 ease-in-out" onClick={() => router.push("#demo")}>
+            <Button className="ml-4 font-bold cursor-pointer hover:scale-105 transition delay-200 duration-300 ease-in-out rounded-4xl px-4 py-2" onClick={() => router.push("#demo")}>
               Try Now
             </Button>
           </nav>
@@ -77,14 +76,14 @@ export function Navigation() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="block px-4 py-2 text-foreground/80 hover:text-foreground transition-colors font-medium"
+                  className="block px-4 py-2 text-gray-600 hover:text-foreground transition-colors font-medium hover:delay-600 hover:duration-300 hover:ease-in-out"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.name}
                 </Link>
               ))}
               <Button 
-                className="w-full mt-2 cursor-pointer"
+                className="w-full mt-2 cursor-pointer rounded-4xl px-4 py-2"
                 onClick={() => {
                   setIsMenuOpen(false)
                   router.push("#demo")
