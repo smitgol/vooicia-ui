@@ -78,7 +78,6 @@ export default function Demo() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [selectedAssistant, setSelectedAssistant] = useState(ASSISTANTS[0].id);
-  const [error, setError] = useState<string | null>(null);
 
   //states to handle assistant
   const [rtviClient, setRtviClient] = useState<RTVIClient | null>(null);
@@ -175,12 +174,10 @@ export default function Demo() {
           onBotTranscript: (data) => console.log(`Bot: ${data.text}`),
           onMessageError: (error) => {
             console.error('Message error:', error);
-            setError('An error occurred during the call');
             setIsProcessing(false);
           },
           onError: (error) => {
             console.error('Error:', error);
-            setError('Failed to connect to assistant');
             setIsProcessing(false);
           },
         },
@@ -192,7 +189,6 @@ export default function Demo() {
       setRtviClient(client);
     } catch (error) {
       console.error('Connection error:', error);
-      setError('Failed to initialize assistant connection');
       setIsProcessing(false);
     }
   }
@@ -212,7 +208,6 @@ export default function Demo() {
       setIsProcessing(false);
     } catch (error) {
       console.error('Disconnection error:', error);
-      setError('Failed to disconnect from assistant');
       setIsProcessing(false);
     }
   }
