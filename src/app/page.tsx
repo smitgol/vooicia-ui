@@ -7,7 +7,7 @@ const Contact = lazy(() => import("@/components/sections/contact"))
 const Footer = lazy(() => import("@/components/footer"))
 const HowItWorks = lazy(() => import("@/components/sections/how-it-works"))
 const CompanyLogos = lazy(() => import("@/components/sections/company-logos"))
-const Pricing = lazy(() => import("@/components/sections/pricing"))
+//const Pricing = lazy(() => import("@/components/sections/pricing"))
 export default function Home() {
   return (
     <>
