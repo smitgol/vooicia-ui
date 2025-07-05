@@ -15,9 +15,9 @@ export default function CompanyLogos() {
   const router = useRouter()
 
   return (
-    <section className="pt-20 overflow-hidden max-w-5xl md:max-w-7xl mx-auto">
+    <section className="pt-0 md:pt-20 overflow-hidden max-w-5xl md:max-w-7xl mx-auto">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-2 md:mb-16">
           <h2 className="text-4xl font-bold mb-0">Our <span className="text-primary">Clients</span></h2>
         </div>
 
@@ -29,7 +29,7 @@ export default function CompanyLogos() {
             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
           >
             {companies.map((company, index) => (
-              <div key={index} className="flex items-center justify-center w-32 h-32">
+              <div key={index} className="flex items-center justify-center w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64">
                 <div className="relative w-full h-full group">
                   <div className="relative w-full h-full ">
                     <Image
@@ -45,7 +45,7 @@ export default function CompanyLogos() {
           </motion.div>
         </div>
 
-        <div className="mt-16 text-center">
+        <div className="mt-2 md:mt-16 text-center">
           <p className="text-xl mb-6">Join the growing list of businesses transforming their customer service</p>
           <Button
             size="lg"

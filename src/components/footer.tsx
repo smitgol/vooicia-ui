@@ -42,7 +42,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="border-t border-border/50 bg-background/80 backdrop-blur-sm max-w-xl md:max-w-7xl mx-auto">
+    <footer className="border-t border-border/50 bg-background/80 backdrop-blur-sm max-w-md md:max-w-7xl mx-auto">
       <div className="container mx-auto py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           <div className="lg:col-span-2">
@@ -52,7 +52,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-muted-foreground mb-6">
-              Revolutionizing customer service with AI-powered call agents for businesses in India and beyond. 
+              Revolutionizing customer service with AI-powered call agents for businesses. 
               Available 24/7 with multilingual support.
             </p>
             <div className="flex items-center gap-4 mt-8">
