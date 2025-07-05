@@ -29,7 +29,7 @@ export default function CompanyLogos() {
             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
           >
             {companies.map((company, index) => (
-              <div key={index} className="flex items-center justify-center w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64">
+              <div key={index} className="flex items-center justify-center w-32 h-32 md:w-48 md:h-48 lg:w-48 lg:h-48">
                 <div className="relative w-full h-full group">
                   <div className="relative w-full h-full ">
                     <Image
