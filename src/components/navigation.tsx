@@ -31,7 +31,7 @@ export function Navigation() {
       <div className="container mx-auto py-1.5 px-6 flex flex-col justify-center gap-1 sm:gap-2">
         <div className={`flex items-center justify-between w-full`}>
           {/* Logo */}
-          <div className="flex justify-between">
+          <div className="flex justify-between w-full md:w-auto">
             
           <Link href="/" className="flex items-center gap-2">
             <span className="text-xl font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">

@@ -25,9 +25,9 @@ export default function Home() {
         <section id="testimonials" className="scroll-mt-20">
           <CompanyLogos />
         </section>
-        <section id="pricing" className="scroll-mt-20">
+        {/*<section id="pricing" className="scroll-mt-20">
           <Pricing />
-        </section>
+        </section>*/}
         <section id="contact" className="scroll-mt-20">
           <Contact />
         </section>
