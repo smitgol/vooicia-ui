@@ -24,7 +24,7 @@ const BLOG_POSTS: BlogPost[] = [
     title: "Case Study: Automating Ecommerce Support with AI Voice Agents",
     description: "Learn how AI voice agents can transform your business with real-world examples, from automated order confirmations to instant refund processing and beyond.",
     url: "https://medium.com/@smitgol007/from-order-updates-to-instant-refunds-ai-voice-agents-in-action-0b3f7cfccf18",
-    imageUrl: "https://image.lexica.art/full_webp/2b4c19f5-bbfa-4ed4-864e-9b9ef5853712",
+    imageUrl: "https://res.cloudinary.com/db33aim2r/image/upload/v1751720995/2b4c19f5-bbfa-4ed4-864e-9b9ef5853712_bvch7y.png",
     imageAlt: "AI Voice Agent in Action",
     readTime: "5 min read",
     date: "July 3, 2025",
