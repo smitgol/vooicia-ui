@@ -3,6 +3,11 @@ import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { Sparkles, ArrowRight } from "lucide-react"
 import { useState, useRef } from "react"
+/**
+ * Renders the interactive hero section for the landing page, featuring animated gradients, mouse-tracking effects, and product highlights.
+ *
+ * The section includes a dynamic blurred gradient that follows the user's cursor, animated decorative dots, a promotional badge, a headline, a description, a call-to-action button that navigates to the demo section, and a list of key product features.
+ */
 export default function Hero() {
   const router = useRouter();
   const [position, setPosition] = useState({ x: 0, y: 0 });
