@@ -1,0 +1,13 @@
+# robots.txt for AI Voice Agent for Customer Support
+
+User-agent: *
+Disallow: /admin/
+Disallow: /backend/
+Disallow: /api/
+Disallow: /checkout/
+Allow: /
+
+
+
+# Crawl-delay to limit bot requests
+Crawl-delay: 10
