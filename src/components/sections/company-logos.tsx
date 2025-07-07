@@ -11,6 +11,11 @@ const companies = [
   { name: "LOOkFANTASTIC", logo: "https://cdn.gymshark.com/images/branding/gs-icon-text.svg" },
 ]
 
+/**
+ * Displays a horizontally scrolling marquee of client company logos with a call-to-action button.
+ *
+ * Renders a section featuring animated company logos, a headline, and a button that navigates to the contact section of the page.
+ */
 export default function CompanyLogos() {
   const router = useRouter()
 
@@ -29,7 +34,7 @@ export default function CompanyLogos() {
             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
           >
             {companies.map((company, index) => (
-              <div key={index} className="flex items-center justify-center w-32 h-32 md:w-48 md:h-48 lg:w-48 lg:h-48">
+              <div key={index} className="flex items-center justify-center w-32 h-32 md:w-48 md:h-48">
                 <div className="relative w-full h-full group">
                   <div className="relative w-full h-full ">
                     <Image

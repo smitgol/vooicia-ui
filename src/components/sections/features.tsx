@@ -12,7 +12,7 @@ const features = [
   },
   {
     title: "Multilingual Support",
-    description: "Communicate with customers in their preferred language with support for multiple Indian languages.",
+    description: "Communicate with customers in their preferred language with support for multiple languages.",
     icon: <Languages className="w-6 h-6 text-violet-500" />
   },
   {
@@ -32,7 +32,7 @@ const features = [
   },
   {
     title: "Compliance & Data Security",
-    description: "Built with privacy and regulatory standards in mind for Indian businesses.",
+    description: "Built with privacy and regulatory standards in mind for Global businesses.",
     icon: <ShieldCheck className="w-6 h-6 text-violet-500" />
   }
 ]
