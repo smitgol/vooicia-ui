@@ -48,7 +48,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-6">
               <span className="">
-                Voocia
+                Voycia
               </span>
             </Link>
             <p className="text-muted-foreground mb-6">
@@ -90,7 +90,7 @@ export default function Footer() {
 
         <div className="border-t border-border/50 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} Voocia. All rights reserved.
+            © {currentYear} Voycia. All rights reserved.
           </p>
           <div className="flex items-center gap-6 mt-4 md:mt-0">
             <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
