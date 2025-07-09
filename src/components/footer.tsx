@@ -9,54 +9,51 @@ export default function Footer() {
       title: "Product",
       links: [
         { name: "Features", href: "#features" },
-        { name: "Pricing", href: "#pricing" },
+        { name: "How it works", href: "#how-it-works" },
         { name: "Demo", href: "#demo" },
-        { name: "Integrations", href: "#" },
       ],
     },
     {
       title: "Company",
       links: [
-        { name: "About Us", href: "#" },
-        { name: "Careers", href: "#" },
-        { name: "Blog", href: "#" },
+        { name: "About Us", href: "/about" },
+        { name: "Case Studies", href: "case-studies" },
         { name: "Contact", href: "#contact" },
       ],
     },
     {
       title: "Legal",
       links: [
-        { name: "Privacy Policy", href: "#" },
-        { name: "Terms of Service", href: "#" },
-        { name: "Cookie Policy", href: "#" },
-        { name: "GDPR", href: "#" },
+        { name: "Privacy Policy", href: "/privacy-policy" },
+        { name: "Terms of Service", href: "/terms" },
       ],
     },
   ]
 
   const socialLinks = [
     { name: "Twitter", icon: Twitter, href: "#" },
-    { name: "Facebook", icon: Facebook, href: "#" },
+    { name: "Facebook", icon: Facebook, href: "#" },  
     { name: "LinkedIn", icon: Linkedin, href: "#" },
     { name: "Instagram", icon: Instagram, href: "#" },
   ]
 
   return (
-    <footer className="border-t border-border/50 bg-background/80 backdrop-blur-sm max-w-md md:max-w-7xl mx-auto">
-      <div className="container mx-auto py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
-          <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-6">
-              <span className="">
+    <footer className="bg-background/80 backdrop-blur-sm border-t">
+      <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 max-w-md md:max-w-7xl">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-12">
+          {/* Mobile: Hidden, will be shown after links */}
+          <div className="lg:col-span-2 space-y-4 hidden lg:block">
+            <Link href="/" className="flex items-center gap-2">
+              <span className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
                 Voycia
               </span>
             </Link>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-muted-foreground">
               Revolutionizing customer service with AI-powered call agents for businesses. 
               Available 24/7 with multilingual support.
             </p>
-            <div className="flex items-center gap-4 mt-8">
-              {false && socialLinks.map((social) => (
+            <div className="flex items-center gap-4 pt-4">
+              {socialLinks.map((social) => (
                 <Link
                   key={social.name}
                   href={social.href}
@@ -69,7 +66,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {false && footerLinks.map((column) => (
+          {footerLinks.map((column) => (
             <div key={column.title}>
               <h3 className="font-semibold text-lg mb-4">{column.title}</h3>
               <ul className="space-y-3">
@@ -86,23 +83,37 @@ export default function Footer() {
               </ul>
             </div>
           ))}
+          
+          {/* Mobile: Show logo and description after links */}
+          <div className="col-span-2 lg:hidden space-y-4 pt-8 border-t border-border/50 mt-8">
+            <Link href="/" className="flex items-center gap-2">
+              <span className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
+                Voycia
+              </span>
+            </Link>
+            <p className="text-muted-foreground">
+              Revolutionizing customer service with AI-powered call agents for businesses. 
+              Available 24/7 with multilingual support.
+            </p>
+            <div className="flex items-center gap-4 pt-4">
+              {socialLinks.map((social) => (
+                <Link
+                  key={social.name}
+                  href={social.href}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label={social.name}
+                >
+                  <social.icon className="w-5 h-5" />
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="border-t border-border/50 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-muted-foreground">
+        <div className="border-t border-border/50 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+          <p className="text-sm text-muted-foreground text-center sm:text-left">
             © {currentYear} Voycia. All rights reserved.
           </p>
-          <div className="flex items-center gap-6 mt-4 md:mt-0">
-            <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Terms of Service
-            </Link>
-            <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Cookie Policy
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

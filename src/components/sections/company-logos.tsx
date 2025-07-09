@@ -26,17 +26,17 @@ export default function CompanyLogos() {
           <h2 className="text-4xl font-bold mb-0">Our <span className="text-primary">Clients</span></h2>
         </div>
 
-        {/* Continuous marquee animation from left to right */}
+        {/* Continuous marquee animation */}
         <div className="relative w-full overflow-hidden">
           <motion.div
-            className="flex space-x-12 items-center"
-            animate={{ x: ["-100%", "100%"] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            className="flex w-max items-center gap-12"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
-            {companies.map((company, index) => (
-              <div key={index} className="flex items-center justify-center w-32 h-32 md:w-48 md:h-48">
+            {[...companies, ...companies].map((company, index) => (
+              <div key={index} className="flex items-center justify-center">
                 <div className="relative w-full h-full group">
-                  <div className="relative w-full h-full ">
+                  <div className="relative w-32 h-32 md:w-48 md:h-48 ">
                     <Image
                       src={company.logo}
                       alt={company.name}

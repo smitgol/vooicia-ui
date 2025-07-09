@@ -141,14 +141,23 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20">
-      <div className="w-full">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Get In <span className="text-primary">Touch</span></h2>
+    <section
+      id="contact"
+      className="relative my-20 py-20 bg-cover bg-center bg-no-repeat overflow-hidden"
+      style={{
+        backgroundImage: 'url("https://pulse-robot-template-105.lovable.app/Header-background.webp")',
+      }}
+    >
+      {/* Optional dark overlay for better readability */}
+      <div className="absolute inset-0 bg-white/50 backdrop-blur-sm" />
+
+      <div className="relative w-full z-10">
+        <div className="text-center pb-16">
+          <p className="inline-block px-4 py-2 text-sm font-medium bg-primary/10 text-primary rounded-full mb-4">Get In Touch</p>
           <p className="text-xl text-muted-foreground">Have questions? Our team is here to help you get started</p>
         </div>
         
-        <div className="flex flex-col items-center justify-center w-full">
+        <div className="flex flex-col items-center justify-center w-full px-4">
           {/*<div>
             <h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
             <p className="text-muted-foreground mb-8">
@@ -204,7 +213,7 @@ export default function Contact() {
             </div>
           </div>*/}
           
-          <div className="bg-muted/30 rounded-2xl p-8 items-center justify-center md:w-1/2 w-full">
+          <div className="bg-muted/30 rounded-2xl p-8 items-center justify-center md:w-1/2 w-full z-10 ">
             <h3 className="text-2xl font-semibold mb-6">Send Us a Message</h3>
             
             {/* Status Messages */}
@@ -281,7 +290,7 @@ export default function Contact() {
               
               <Button 
                 type="submit" 
-                className="w-full cursor-pointer bg-violet-500 hover:bg-violet-600"
+                className="w-full cursor-pointer bg-primary hover:bg-primary/60"
                 disabled={status.isSubmitting}
               >
                 {status.isSubmitting ? (
