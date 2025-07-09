@@ -1,7 +1,46 @@
 "use client"
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
+import { cn } from '@/lib/utils';
+
+interface StepCardProps {
+  number: string;
+  title: string;
+  description: string;
+  isActive: boolean;
+  onClick: () => void;
+}
+
+const StepCard = ({ number, title, description, isActive, onClick }: StepCardProps) => {
+  return (
+    <div 
+      className={
+        `rounded-xl p-6 cursor-pointer transition-all duration-500 border
+        ${isActive ? "bg-white shadow-elegant border-primary/70 shadow-elegant" : "bg-white/50 hover:bg-white/80 border-transparent"}`
+      }
+      onClick={onClick}
+    >
+      <div className="flex items-start">
+        <div className={
+          `flex items-center justify-center rounded-full w-10 h-10 mr-4 flex-shrink-0 transition-colors duration-300
+          ${isActive ? "bg-primary text-white" : "bg-gray-100 text-gray-500"}`
+        }>
+          {number}
+        </div>
+        <div>
+          <h3 className={
+            `text-lg font-semibold mb-2 transition-colors duration-300
+            ${isActive ? "text-primary" : "text-gray-800"}`
+          }>
+            {title}
+          </h3>
+          <p className="text-gray-600 text-sm">{description}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -31,98 +70,132 @@ const lineAnimation = {
   }
 };
 
-const steps = [
+const stepsData = [
   {
-    number: '01',
-    title: 'Share Your Support Call Requirements',
-    description: 'Tell us what your AI agent should handle — common queries, FAQs, or escalation rules.',
-    info: 'We collect your use case, business hours, and support call types over a short call.'
+    number: "01",
+    title: "Setup & Configuration",
+    description: "Configure VoiceAI with your business knowledge base, FAQs, and customer service protocols.",
+    image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80"
   },
   {
-    number: '02',
-    title: 'We Set Up the Voice Agent for You',
-    description: 'Our team builds the voice script, sets language preferences, and integrates with your call number.',
-    info: 'No coding or tool setup needed on your end — we do it all.'
+    number: "02",
+    title: "Voice Training",
+    description: "Train the AI with your brand voice, tone, and specific terminology for personalized customer interactions.",
+    image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&w=800&q=80"
   },
   {
-    number: '03',
-    title: 'AI Starts Answering Calls',
-    description: 'We connect the AI to your business number. It begins answering calls instantly with a human-like voice.',
-    info: 'Your support line is now smart, fast, and available 24/7.'
+    number: "03",
+    title: "Integration & Testing",
+    description: "Connect VoiceAI to your phone systems and run comprehensive tests to ensure optimal performance.",
+    image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=800&q=80"
   },
   {
-    number: '04',
-    title: 'You Get Reports & Insights',
-    description: 'Get regular reports with call summaries, feedback, and suggestions for improvement.',
-    info: 'Track resolved queries, missed calls, and escalation rates from our simple dashboard or via email.'
+    number: "04",
+    title: "Go Live & Monitor",
+    description: "Launch your AI voice agent and monitor performance with real-time analytics and continuous optimization.",
+    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
 const HowItWorks = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  useEffect(() => {
+    // Auto-cycle through steps
+    const interval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % stepsData.length);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [stepsData.length]);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-fade-in");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    
+    const elements = document.querySelectorAll(".fade-in-stagger");
+    elements.forEach((el, index) => {
+      (el as HTMLElement).style.animationDelay = `${0.1 * (index + 1)}s`;
+      observer.observe(el);
+    });
+    
+    return () => {
+      elements.forEach((el) => {
+        observer.unobserve(el);
+      });
+    };
+  }, []);
 
   return (
-    <section ref={ref} className="py-16 overflow-hidden max-w-5xl md:max-w-7xl mx-auto">
-      <div className="container mx-auto px-4 text-center">
+    <section ref={ref} className="py-16 mx-auto max-w-5xl md:max-w-7xl">
+      <div className="container mx-auto px-4 text-center ">
         <motion.span 
           initial={{ opacity: 0, y: -20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-block px-4 py-2 mb-20 text-sm font-medium bg-violet-100 text-violet-600 rounded-full text-center"
+          className="inline-block px-4 py-2 text-sm font-medium bg-primary/10 text-primary rounded-full mb-4"
         >
           How It Works
         </motion.span>
-        
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={staggerContainer}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.4 }}
         >
-          {steps.map((step, index) => (
-            <motion.div 
-              key={step.number} 
-              className="group relative"
-              variants={fadeIn}
-            >
-              <div className={`h-full flex ${index%2 === 0 ? 'flex-col' : 'flex-col-reverse'} items-center text-center bg-white transition-all duration-300 gap-16 hover:scale-[1.02]`}>
-                <motion.div 
-                  className="relative z-10 w-20 h-20 rounded-full bg-violet-100 flex items-center justify-center mb-6 group-hover:bg-violet-200 transition-colors duration-300 hidden md:flex"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <span className="text-2xl font-bold text-violet-700">{step.number}</span>
-                </motion.div>
-                
-                <motion.div 
-                  className={`absolute left-1/2 w-0.5 h-48 bg-gradient-to-b from-violet-200 to-violet-100 transform ${index%2 === 0 ? 'top-10' : 'bottom-10'} -translate-x-1/2 hidden md:block`}
-                  variants={lineAnimation}
-                  initial="hidden"
-                  animate={isInView ? "visible" : "hidden"}
-                />
-                
-                <motion.div 
-                  className="w-full z-10"
-                  whileHover={{ y: -5 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
-                >
-                  <Card className="w-full border-1 shadow-none hover:shadow-md bg-white p-6 gap-0">
-                    <CardHeader className="px-0 md:pb-3 pb-0">
-                      <CardTitle className="text-xl font-semibold text-violet-900">{step.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="px-0 pb-0">
-                      <p className="text-gray-600 mb-3">{step.description}</p>
-                      <div className="bg-violet-50 p-3 rounded-lg border border-violet-100">
-                        <p className="text-sm text-violet-800">{step.info}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              </div>
-            </motion.div>
-          ))}
+          <h2 className='text-center font-bold md:text-5xl text-3xl mb-2'>How VoiceAI Transforms Your Support</h2>
+          <p className='text-center text-muted-foreground text-lg md:text-xl'>
+            A simple four-step process from setup to full deployment.
+          </p>
         </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20">
+          <div className="space-y-4 order-2">
+            {stepsData.map((step, index) => (
+              <StepCard
+                key={step.number}
+                number={step.number}
+                title={step.title}
+                description={step.description}
+                isActive={activeStep === index}
+                onClick={() => setActiveStep(index)}
+              />
+            ))}
+          </div>
+          <div className="relative rounded-3xl overflow-hidden h-[400px] shadow-elegant order-1 lg:order-2 fade-in-stagger">
+            {stepsData.map((step, index) => (
+              <div
+                key={index}
+                className={cn(
+                  "absolute inset-0 transition-opacity duration-1000",
+                  activeStep === index ? "opacity-100" : "opacity-0 pointer-events-none"
+                )}
+              >
+                <img
+                  src={step.image}
+                  alt={step.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent">
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <span className="text-pulse-400 font-medium mb-2 block">{step.number}</span>
+                    <h3 className="text-2xl font-semibold mb-2">{step.title}</h3>
+                    <p className="text-white/80">{step.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

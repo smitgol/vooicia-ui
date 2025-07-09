@@ -64,7 +64,7 @@ const VoiceWave = ({ isActive }: { isActive: boolean }) => {
       {bars.map((_, i) => (
         <motion.div
           key={i}
-          className="w-1.5 bg-gradient-to-t from-indigo-500 to-purple-500 rounded-full"
+          className="w-1.5 bg-gradient-to-t from-amber-500 to-orange-500 rounded-full"
           style={{ height: `${20 + Math.random() * 30}%` }}
           animate={isActive ? controls : { scaleY: 1 }}
           transition={{ duration: 0.3, delay: i * 0.05 }}
@@ -228,7 +228,7 @@ export default function Demo() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto text-center"
         >
-          <div className="inline-block px-4 py-2 text-sm font-medium bg-violet-100 text-violet-600 rounded-full mb-4">
+          <div className="inline-block px-4 py-2 text-sm font-medium bg-primary/10 text-primary rounded-full mb-4">
             <div className="flex items-center">
               <Zap className="w-4 h-4 mr-2" />
               AI Voice Assistant Demo
@@ -280,7 +280,7 @@ export default function Demo() {
                               <div
                                 className={cn(
                                   "flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center",
-                                  `bg-violet-500`
+                                  `bg-primary/70`
                                 )}
                               >
                                 {assistant.icon}
@@ -318,7 +318,7 @@ export default function Demo() {
                       className={cn(
                         "relative flex items-center justify-center w-20 h-20 rounded-full text-white shadow-lg transition-all duration-300 cursor-pointer",
                         "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-background",
-                        isProcessing ? "bg-violet-400 cursor-not-allowed" : "bg-violet-500 hover:bg-violet-600",
+                        isProcessing ? "bg-primary/40 cursor-not-allowed" : "bg-primary hover:bg-primary/60",
                         isRecording ? "animate-pulse" : ""
                       )}
                       variants={buttonVariants}
