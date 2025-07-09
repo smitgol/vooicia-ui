@@ -1,7 +1,6 @@
 "use client"
 import React, { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
 import { cn } from '@/lib/utils';
 
 interface StepCardProps {
@@ -40,34 +39,6 @@ const StepCard = ({ number, title, description, isActive, onClick }: StepCardPro
       </div>
     </div>
   );
-};
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.3
-    }
-  }
-};
-
-const lineAnimation = {
-  hidden: { scaleY: 0, opacity: 0 },
-  visible: { 
-    scaleY: 1, 
-    opacity: 1,
-    transition: { 
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1]
-    }
-  }
 };
 
 const stepsData = [
