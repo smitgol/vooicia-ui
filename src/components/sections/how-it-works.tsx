@@ -52,7 +52,7 @@ const stepsData = [
     number: "02",
     title: "Voice Training",
     description: "Train the AI with your brand voice, tone, and specific terminology for personalized customer interactions.",
-    image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&w=800&q=80"
+    image: "/images/voice_training_step.png"
   },
   {
     number: "03",
