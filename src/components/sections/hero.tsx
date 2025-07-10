@@ -1,17 +1,73 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
-import { Sparkles, ArrowRight } from "lucide-react"
-import { useState, useRef } from "react"
-/**
+import { Sparkles, Mic, MessageSquare } from "lucide-react"
+import { useState, useRef, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+
+// Custom button component that supports Framer Motion props
+const AnimatedButton = motion(Button);
+import {
+  RTVIClient,
+  RTVIClientOptions,
+  RTVIEvent,
+} from '@pipecat-ai/client-js';
+import {
+  WebSocketTransport
+} from "@pipecat-ai/websocket-transport";
+import { getPromptById } from "@/prompts/demoPrompts";
+
+interface Assistant {
+  id: string;
+  name: string;
+  description: string;
+  icon: React.ReactNode;
+  color: string;
+  language: string;
+}
+
+const ASSISTANTS: Assistant[] = [
+  {
+    id: "customer_support",
+    name: "Customer Support",
+    description: "24/7 AI customer support assistant",
+    icon: <MessageSquare className="w-5 h-5 text-white" />,
+    color: "from-violet-300 to-violet-500",
+    language: "en"
+  },
+];/**
  * Renders the interactive hero section for the landing page, featuring animated gradients, mouse-tracking effects, and product highlights.
  *
  * The section includes a dynamic blurred gradient that follows the user's cursor, animated decorative dots, a promotional badge, a headline, a description, a call-to-action button that navigates to the demo section, and a list of key product features.
  */
 export default function Hero() {
-  const router = useRouter();
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [connecting, setConnecting] = useState(false);
+
+  //states to handle assistant
+  const [rtviClient, setRtviClient] = useState<RTVIClient | null>(null);
+  const botAudioRef = useRef<HTMLAudioElement | null>(null);
+  const selectedAssistant= ASSISTANTS[0].id;
+  const [isRecording, setIsRecording] = useState(false);
+  const [ripple, setRipple] = useState<{x: number, y: number, id: number}[]>([]);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const handleRipple = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!buttonRef.current) return;
+    
+    const rect = buttonRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const newRipple = { x, y, id: Date.now() };
+    
+    setRipple(prev => [...prev, newRipple]);
+    
+    // Remove ripple after animation completes
+    setTimeout(() => {
+      setRipple(prev => prev.filter(r => r.id !== newRipple.id));
+    }, 1000);
+  };
+  
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = containerRef.current?.getBoundingClientRect();
@@ -22,6 +78,121 @@ export default function Hero() {
       y: e.clientY - rect.top,
     });
   };
+
+  const startDemo = () => {
+    connectToAssistant();
+  }
+  useEffect(() => {
+      const botAudio = document.createElement('audio');
+      botAudio.autoplay = true;
+      botAudioRef.current = botAudio;
+      document.body.appendChild(botAudio);
+    }, []);
+
+  
+  const setUpMediaTracks = () => {
+    const tracks = rtviClient?.tracks();
+    if (tracks?.bot?.audio) {
+      setupAudioTrack(tracks.bot.audio);
+    }
+  }
+
+  const setupTrackListeners = () => {
+    if (!rtviClient) return;
+    rtviClient.on(RTVIEvent.TrackStarted, (track, participant) => {
+      // Only handle non-local (bot) tracks
+      if (!participant?.local && track.kind === 'audio') {
+        setupAudioTrack(track);
+      }
+    });
+  }
+  
+  const setupAudioTrack = (track: MediaStreamTrack) => {
+    console.log('Setting up audio track', track)
+    if (!botAudioRef.current) return;
+    if (botAudioRef.current.srcObject && "getAudioTracks" in botAudioRef.current.srcObject) {
+      const oldTrack = botAudioRef.current.srcObject.getAudioTracks()[0];
+      if (oldTrack?.id === track.id) return;
+    }
+    botAudioRef.current.srcObject = new MediaStream([track]);
+  }
+  
+  const connectToAssistant = async () => {
+    setConnecting(true);
+    const prompt = getPromptById(selectedAssistant);
+    try {
+      const transport = new WebSocketTransport();
+      const RTVIConfig: RTVIClientOptions = {
+        transport,
+        params: {
+          baseUrl: process.env.NEXT_PUBLIC_SERVER_URL,
+          endpoints: { connect: "/create_voice_assistant_session" },
+          requestData: {
+            prompt: prompt?.content,
+            language: prompt?.language,
+            voice_id: prompt?.voice_id,
+            initial_message: prompt?.initial_message,
+          }
+        },
+        enableMic: true,
+        enableCam: false,
+        callbacks: {
+          onConnected: () => {
+            setConnecting(false);
+            setIsRecording(true);
+          },
+          onDisconnected: () => {
+            setConnecting(false);
+            setIsRecording(false);
+          },
+          onBotReady: (data) => {
+            console.log('Bot ready', data);
+            setUpMediaTracks();
+          },
+          onUserTranscript: (data) => {
+            if (data.final) {
+              console.log(`User: ${data.text}`);
+            }
+          },
+          onBotTranscript: (data) => console.log(`Bot: ${data.text}`),
+          onMessageError: (error) => {
+            console.error('Message error:', error);
+            setConnecting(false);
+          },
+          onError: (error) => {
+            console.error('Error:', error);
+            setConnecting(false);
+          },
+        },
+      };
+      const client = new RTVIClient(RTVIConfig);
+      setupTrackListeners();
+      await client.initDevices();
+      await client.connect();
+      setRtviClient(client);
+    } catch (error) {
+      console.error('Connection error:', error);
+      setConnecting(false);
+    }
+  }
+  
+  const disconnectAssistant = async () => {
+    console.log('Disconnecting from assistant...');
+    setConnecting(true);
+    try {
+      await rtviClient?.disconnect();
+      setRtviClient(null);
+      setIsRecording(false);
+      if (botAudioRef.current?.srcObject && "getAudioTracks" in botAudioRef.current.srcObject) {
+        botAudioRef.current.srcObject.getAudioTracks().forEach((track) => track.stop())
+        botAudioRef.current.srcObject = null;
+      }
+      setConnecting(false);
+    } catch (error) {
+      console.error('Disconnection error:', error);
+      setConnecting(false);
+    }
+  }
 
   
   return (
@@ -60,10 +231,113 @@ export default function Hero() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="font-bold cursor-pointer text-lg px-8 py-6 transition-all duration-600 hover:shadow-amber-500/40 hover:-translate-y-1" onClick={() => router.push("#demo")}>
-              Try Now  <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
+            <AnimatedButton 
+              ref={buttonRef}
+              size="lg" 
+              className="font-bold cursor-pointer text-lg px-8 py-6 transition-all duration-600 hover:shadow-amber-500/40 relative overflow-hidden w-64 group" 
+              onClick={(e) => {
+                handleRipple(e);
+                if (isRecording) {
+                  disconnectAssistant();
+                } else if (!connecting) {
+                  startDemo();
+                }
+              }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <AnimatePresence>
+                {ripple.map(({ x, y, id }) => (
+                  <motion.span
+                    key={id}
+                    className="absolute rounded-full bg-white/20"
+                    initial={{ width: 0, height: 0, opacity: 1 }}
+                    animate={{
+                      width: 400,
+                      height: 400,
+                      opacity: 0,
+                      x: x - 200,
+                      y: y - 200,
+                    }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8, ease: 'easeOut' }}
+                  />
+                ))}
+              </AnimatePresence>
+              
+              {connecting ? (
+                <span className="typing-animation">Just a Sec...</span>
+              ) : isRecording ? (
+                <>
+                  Stop Talking
+                  <div className="flex items-center ml-2 space-x-1">
+                    <span className="sound-wave">
+                      <span className="sound-wave-bar"></span>
+                      <span className="sound-wave-bar"></span>
+                      <span className="sound-wave-bar"></span>
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  Talk to Assistant <Mic className="w-4 h-4 ml-2" />
+                </>
+              )}
 
+              <style jsx>{`
+                @keyframes typing {
+                  from { width: 0 }
+                  to { width: 100% }
+                }
+                .typing-animation {
+                  display: inline-block;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  border-right: 2px solid;
+                  animation: 
+                    typing 1.8s steps(12, end) forwards,
+                    blink-caret 0.75s step-end infinite;
+                }
+                @keyframes blink-caret {
+                  from, to { border-color: transparent }
+                  50% { border-color: currentColor; }
+                }
+                .sound-wave {
+                  display: flex;
+                  align-items: center;
+                  height: 20px;
+                  gap: 3px;
+                }
+                .sound-wave-bar {
+                  display: inline-block;
+                  width: 2px;
+                  height: 6px;
+                  background-color: currentColor;
+                  border-radius: 1px;
+                  animation: sound-wave-animation 1.5s ease-in-out infinite both;
+                }
+                .sound-wave-bar:nth-child(1) {
+                  animation-delay: 0s;
+                }
+                .sound-wave-bar:nth-child(2) {
+                  animation-delay: 0.2s;
+                  height: 12px;
+                }
+                .sound-wave-bar:nth-child(3) {
+                  animation-delay: 0.4s;
+                  height: 8px;
+                }
+                @keyframes sound-wave-animation {
+                  0%, 100% {
+                    transform: scaleY(0.8);
+                    opacity: 0.6;
+                  }
+                  50% {
+                    transform: scaleY(1.5);
+                    opacity: 1;
+                  }
+                }
+              `}</style>
+            </AnimatedButton>
           </div>
             
           <div className="mt-12 flex flex-col md:flex-row justify-center gap-3 md:gap-6 text-muted-foreground w-[65%] mx-auto">
