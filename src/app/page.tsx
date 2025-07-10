@@ -2,7 +2,7 @@ import { lazy } from "react"
 
 const Hero = lazy(() => import("../components/sections/hero"))
 const Features = lazy(() => import("@/components/sections/features"))
-const Demo = lazy(() => import("@/components/sections/demo"))
+//const Demo = lazy(() => import("@/components/sections/demo"))
 const Contact = lazy(() => import("@/components/sections/contact"))
 const Footer = lazy(() => import("@/components/footer"))
 const HowItWorks = lazy(() => import("@/components/sections/how-it-works"))
@@ -19,9 +19,9 @@ export default function Home() {
         <section id="how-it-works" className="scroll-mt-20">
           <HowItWorks />
         </section>
-        <section id="demo" className="scroll-mt-20">
+        {/*<section id="demo" className="scroll-mt-20">
           <Demo />
-        </section>
+        </section>*/}
         <section id="testimonials" className="scroll-mt-20">
           <CompanyLogos />
         </section>

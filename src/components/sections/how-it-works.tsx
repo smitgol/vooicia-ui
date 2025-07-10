@@ -15,7 +15,7 @@ const StepCard = ({ number, title, description, isActive, onClick }: StepCardPro
   return (
     <div 
       className={
-        `rounded-xl p-6 cursor-pointer transition-all duration-500 border
+        `rounded-xl p-5 cursor-pointer transition-all duration-500 border
         ${isActive ? "bg-white shadow-elegant border-primary/70 shadow-elegant" : "bg-white/50 hover:bg-white/80 border-transparent"}`
       }
       onClick={onClick}
@@ -46,7 +46,7 @@ const stepsData = [
     number: "01",
     title: "Setup & Configuration",
     description: "Configure VoiceAI with your business knowledge base, FAQs, and customer service protocols.",
-    image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80"
+    image: "/images/setup_step.png"
   },
   {
     number: "02",
@@ -58,13 +58,13 @@ const stepsData = [
     number: "03",
     title: "Integration & Testing",
     description: "Connect VoiceAI to your phone systems and run comprehensive tests to ensure optimal performance.",
-    image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=800&q=80"
+    image: "/images/testing_step.png"
   },
   {
     number: "04",
     title: "Go Live & Monitor",
     description: "Launch your AI voice agent and monitor performance with real-time analytics and continuous optimization.",
-    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
@@ -142,7 +142,7 @@ const HowItWorks = () => {
               />
             ))}
           </div>
-          <div className="relative rounded-3xl overflow-hidden h-[400px] shadow-elegant order-1 lg:order-2 fade-in-stagger">
+          <div className="relative rounded-3xl overflow-hidden h-[400px] md:h-[450px] w-full md:w-[650px] shadow-elegant order-1 lg:order-2 fade-in-stagger">
             {stepsData.map((step, index) => (
               <div
                 key={index}
