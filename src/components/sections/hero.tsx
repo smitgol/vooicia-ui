@@ -1,8 +1,8 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { Sparkles, ArrowRight, Mic, MessageSquare } from "lucide-react"
+import { Sparkles, Mic, MessageSquare } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
-import { motion, AnimatePresence, HTMLMotionProps } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 // Custom button component that supports Framer Motion props
 const AnimatedButton = motion(Button);
@@ -47,7 +47,7 @@ export default function Hero() {
   //states to handle assistant
   const [rtviClient, setRtviClient] = useState<RTVIClient | null>(null);
   const botAudioRef = useRef<HTMLAudioElement | null>(null);
-  const [selectedAssistant, setSelectedAssistant] = useState(ASSISTANTS[0].id);
+  const selectedAssistant= ASSISTANTS[0].id;
   const [isRecording, setIsRecording] = useState(false);
   const [ripple, setRipple] = useState<{x: number, y: number, id: number}[]>([]);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -294,7 +294,7 @@ export default function Hero() {
                   white-space: nowrap;
                   border-right: 2px solid;
                   animation: 
-                    typing 1.2s steps(12, end) forwards,
+                    typing 1.8s steps(12, end) forwards,
                     blink-caret 0.75s step-end infinite;
                 }
                 @keyframes blink-caret {
