@@ -33,7 +33,7 @@ export default function CaseStudiesPreview() {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Case Studies</h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Explore our success stories and see how we've helped businesses grow
+            {"Explore our success stories and see how we've helped businesses grow"}
           </p>
         </div>
         
