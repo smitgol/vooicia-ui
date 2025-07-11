@@ -32,16 +32,6 @@ const stepsData = [
 const HowItWorks = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  const [activeStep, setActiveStep] = React.useState(0);
-
-  useEffect(() => {
-    // Auto-cycle through steps
-    const interval = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % stepsData.length);
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, [stepsData.length]);
   
   useEffect(() => {
     const observer = new IntersectionObserver(
