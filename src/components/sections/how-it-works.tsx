@@ -1,46 +1,6 @@
 "use client"
 import React, { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import Image from 'next/image';
-
-interface StepCardProps {
-  number: string;
-  title: string;
-  description: string;
-  isActive: boolean;
-  onClick: () => void;
-}
-
-const StepCard = ({ number, title, description, isActive, onClick }: StepCardProps) => {
-  return (
-    <div 
-      className={
-        `rounded-xl p-5 cursor-pointer transition-all duration-500 border
-        ${isActive ? "bg-white shadow-elegant border-primary/70 shadow-elegant" : "bg-white/50 hover:bg-white/80 border-transparent"}`
-      }
-      onClick={onClick}
-    >
-      <div className="flex items-start">
-        <div className={
-          `flex items-center justify-center rounded-full w-10 h-10 mr-4 flex-shrink-0 transition-colors duration-300
-          ${isActive ? "bg-primary text-white" : "bg-gray-100 text-gray-500"}`
-        }>
-          {number}
-        </div>
-        <div>
-          <h3 className={
-            `text-lg font-semibold mb-2 transition-colors duration-300
-            ${isActive ? "text-primary" : "text-gray-800"}`
-          }>
-            {title}
-          </h3>
-          <p className="text-gray-600 text-sm">{description}</p>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const stepsData = [
   {
@@ -111,64 +71,41 @@ const HowItWorks = () => {
 
   return (
     <section ref={ref} className="py-16 mx-auto max-w-5xl md:max-w-7xl">
-      <div className="container mx-auto px-4 text-center ">
+      <div className="container mx-auto px-4 text-start">
         <motion.span 
           initial={{ opacity: 0, y: -20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="inline-block px-4 py-2 text-sm font-medium bg-primary/10 text-primary rounded-full mb-4"
         >
-          How It Works
+          How We Work
         </motion.span>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
+          className='w-2/3'
         >
-          <h2 className='text-center font-bold md:text-5xl text-3xl mb-2'>How Voycia Transforms Your Support</h2>
-          <p className='text-center text-muted-foreground text-lg md:text-xl'>
-            A simple four-step process from setup to full deployment.
+          <h2 className='font-bold md:text-5xl text-3xl my-5 font-[Gambit]'>A consultative approach</h2>
+          <p className='text-muted-foreground text-lg md:text-lg mt-12 leading-6'>
+          {"Based on your business needs, we’ll help you tailor an AI voice agent that maximizes value capture from your existing operations and development pipeline. We’ll then work on your behalf to expedite timelines, optimize outcomes, and manage customer support."}
           </p>
         </motion.div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20">
-          <div className="space-y-4 order-2">
-            {stepsData.map((step, index) => (
-              <StepCard
-                key={step.number}
-                number={step.number}
-                title={step.title}
-                description={step.description}
-                isActive={activeStep === index}
-                onClick={() => setActiveStep(index)}
-              />
-            ))}
-          </div>
-          <div className="relative rounded-3xl overflow-hidden h-[400px] md:h-[450px] w-full md:w-[650px] shadow-elegant order-1 lg:order-2 fade-in-stagger">
-            {stepsData.map((step, index) => (
-              <div
-                key={index}
-                className={cn(
-                  "absolute inset-0 transition-opacity duration-1000",
-                  activeStep === index ? "opacity-100" : "opacity-0 pointer-events-none"
-                )}
-              >
-                <Image
-                  width={500}
-                  height={500}
-                  src={step.image}
-                  alt={step.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent">
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                    <span className="text-pulse-400 font-medium mb-2 block">{step.number}</span>
-                    <h3 className="text-2xl font-semibold mb-2">{step.title}</h3>
-                    <p className="text-white/80">{step.description}</p>
-                  </div>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-4 mt-16 divide-x divide-y md:divide-y-0 border rounded-xl overflow-hidden">
+          {stepsData.map((step, index) => (
+            <div 
+              key={index} 
+              className="flex flex-col items-start px-8 py-12 gap-10 hover:bg-accent/30 transition-colors"
+            >
+              <div className="text-2xl font-bold text-primary">{step.number}</div>
+              <div className="flex flex-col items-start gap-3">
+                <h3 className="text-xl font-semibold text-primary">{step.title}</h3>
+                <p className="text-sm text-muted-foreground text-start leading-relaxed">
+                  {step.description}
+                </p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

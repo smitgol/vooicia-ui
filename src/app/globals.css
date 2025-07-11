@@ -393,6 +393,9 @@ a, button, input, textarea, select {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  p {
+    font-family: 'Inter', sans-serif;
+  }
 }
 
 .shadow-elegant {

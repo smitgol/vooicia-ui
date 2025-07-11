@@ -28,7 +28,7 @@ const caseStudies = [
 
 export default function CaseStudiesPreview() {
   return (
-    <section id="case-studies" className="py-16 mt-16 bg-muted/40">
+    <section id="case-studies" className="py-16 mt-16">
       <div className="container max-w-6xl px-4 mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Case Studies</h2>

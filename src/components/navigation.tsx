@@ -59,7 +59,7 @@ export function Navigation() {
                 {link.name}
               </Link>
             ))}
-            <Button className="ml-4 font-bold cursor-pointer hover:scale-105 transition delay-200 duration-300 ease-in-out rounded-4xl px-4 py-2" onClick={() => router.push("/#demo")}>
+            <Button className="ml-4 font-bold cursor-pointer hover:scale-105 transition delay-200 duration-300 ease-in-out rounded-4xl px-4 py-2" onClick={() => router.push("/#hero")}>
               Try Now
             </Button>
           </nav>
@@ -86,7 +86,7 @@ export function Navigation() {
                 className="w-full mt-2 cursor-pointer rounded-4xl px-4 py-2"
                 onClick={() => {
                   setIsMenuOpen(false)
-                  router.push("/#demo")
+                  router.push("/#hero")
                 }}
               >
                 Try Now
