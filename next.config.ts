@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    remotePatterns: [new URL('https://www.pillowcube.com/cdn/shop/files/**'), new URL('https://cdn.gymshark.com/images/branding/gs-icon-text.svg')],
+    remotePatterns: [new URL('https://www.pillowcube.com/cdn/shop/files/**'), new URL('https://cdn.gymshark.com/images/branding/gs-icon-text.svg'), new URL('https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=800&q=80')],
   },
 };
 

@@ -2,6 +2,7 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 interface StepCardProps {
   number: string;
@@ -151,7 +152,9 @@ const HowItWorks = () => {
                   activeStep === index ? "opacity-100" : "opacity-0 pointer-events-none"
                 )}
               >
-                <img
+                <Image
+                  width={500}
+                  height={500}
                   src={step.image}
                   alt={step.title}
                   className="w-full h-full object-cover"

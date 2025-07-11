@@ -5,6 +5,7 @@ import { ArrowRight, Clock, Calendar } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 interface BlogPost {
   id: string
@@ -24,12 +25,34 @@ const BLOG_POSTS: BlogPost[] = [
     title: "Case Study: Automating Ecommerce Support with AI Voice Agents",
     description: "Learn how AI voice agents can transform your business with real-world examples, from automated order confirmations to instant refund processing and beyond.",
     url: "https://medium.com/@smitgol007/from-order-updates-to-instant-refunds-ai-voice-agents-in-action-0b3f7cfccf18",
-    imageUrl: "https://res.cloudinary.com/db33aim2r/image/upload/v1751720995/2b4c19f5-bbfa-4ed4-864e-9b9ef5853712_bvch7y.png",
+    imageUrl: "/images/blog_1_thumb.png",
     imageAlt: "AI Voice Agent in Action",
     readTime: "5 min read",
     date: "July 3, 2025",
-    category: "AI Technology"
-  }
+    category: "AI Voice Agents"
+  },
+  {
+    id: "2",
+    title: "Case Study: Automating Order Tracking Calls in ECommerce & D2C with AI Voice Agents",
+    description: "Learn how AI voice agents can automate order tracking calls in eCommerce & D2C with AI voice agents.",
+    url: "https://medium.com/@smitgol007/case-study-automating-order-tracking-calls-in-ecommerce-d2c-with-ai-voice-agents-b390232b5a9f",
+    imageUrl: "/images/blog_2_thumb.png",
+    imageAlt: "AI Voice Agent in Action",
+    readTime: "5 min read",
+    date: "July 5, 2025",
+    category: "AI Voice Agents"
+  },
+  {
+    id: "3",
+    title: "Case Study: Automating Return & Refund Requests in eCommerce with AI Voice Agents",
+    description: "Learn how AI voice agents can automate return & refund requests in eCommerce & D2C with AI voice agents.",
+    url: "https://medium.com/@smitgol007/case-study-automating-return-refund-requests-in-ecommerce-with-ai-voice-agents-37fceb3d018a",
+    imageUrl: "/images/blog_3_thumb.png",
+    imageAlt: "AI Voice Agent in Action",
+    readTime: "5 min read",
+    date: "July 6, 2025",
+    category: "AI Voice Agents"
+  },
 ]
 
 const container = {
@@ -85,9 +108,11 @@ export default function Blog() {
         >
           {BLOG_POSTS.map((post) => (
             <motion.div key={post.id} variants={item}>
-              <Card className="group h-full flex flex-col overflow-hidden bg-white dark:bg-gray-800/50 backdrop-blur-sm border border-gray-100 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" onClick={() => window.open(post.url, '_blank')}>
+              <Card className="group pt-0 h-full flex flex-col overflow-hidden bg-white dark:bg-gray-800/50 backdrop-blur-sm border border-gray-100 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" onClick={() => window.open(post.url, '_blank')}>
                 <div className="relative h-56 w-full overflow-hidden">
-                  <img 
+                  <Image 
+                    width={500}
+                    height={500}
                     src={post.imageUrl} 
                     alt={post.imageAlt}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
