@@ -46,7 +46,7 @@ const stepsData = [
   {
     number: "01",
     title: "Setup & Configuration",
-    description: "Configure VoiceAI with your business knowledge base, FAQs, and customer service protocols.",
+    description: "Configure your business knowledge base, FAQs, and customer service protocols.",
     image: "/images/setup_step.png"
   },
   {
@@ -58,7 +58,7 @@ const stepsData = [
   {
     number: "03",
     title: "Integration & Testing",
-    description: "Connect VoiceAI to your phone systems and run comprehensive tests to ensure optimal performance.",
+    description: "Connect Voycia to your phone systems and run comprehensive tests to ensure optimal performance.",
     image: "/images/testing_step.png"
   },
   {
@@ -125,7 +125,7 @@ const HowItWorks = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <h2 className='text-center font-bold md:text-5xl text-3xl mb-2'>How VoiceAI Transforms Your Support</h2>
+          <h2 className='text-center font-bold md:text-5xl text-3xl mb-2'>How Voycia Transforms Your Support</h2>
           <p className='text-center text-muted-foreground text-lg md:text-xl'>
             A simple four-step process from setup to full deployment.
           </p>

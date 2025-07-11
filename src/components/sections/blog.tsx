@@ -108,14 +108,14 @@ export default function Blog() {
         >
           {BLOG_POSTS.map((post) => (
             <motion.div key={post.id} variants={item}>
-              <Card className="group pt-0 h-full flex flex-col overflow-hidden bg-white dark:bg-gray-800/50 backdrop-blur-sm border border-gray-100 dark:border-gray-700/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" onClick={() => window.open(post.url, '_blank')}>
-                <div className="relative h-56 w-full overflow-hidden">
+              <Card className="group pt-0 h-full flex flex-col overflow-hidden bg-white dark:bg-gray-800/50 transition-all duration-300 cursor-pointer border-0 shadow-none hover:rounded-xl hover:shadow-none" onClick={() => window.open(post.url, '_blank')}>
+                <div className="relative h-56 w-full overflow-hidden rounded-xl">
                   <Image 
                     width={500}
                     height={500}
                     src={post.imageUrl} 
                     alt={post.imageAlt}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 hover:-translate-y-1"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                     <span className="px-3 py-1 text-xs font-medium rounded-full bg-primary text-white">
@@ -124,7 +124,7 @@ export default function Blog() {
                   </div>
                 </div>
                 
-                <div className="flex-1 flex flex-col p-6">
+                <div className="flex-1 flex flex-col py-6 px-2">
                   <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-3 space-x-4">
                     <span className="flex items-center">
                       <Calendar className="w-3.5 h-3.5 mr-1" />

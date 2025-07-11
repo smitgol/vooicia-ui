@@ -7,6 +7,7 @@ const Contact = lazy(() => import("@/components/sections/contact"))
 const Footer = lazy(() => import("@/components/footer"))
 const HowItWorks = lazy(() => import("@/components/sections/how-it-works"))
 const CompanyLogos = lazy(() => import("@/components/sections/company-logos"))
+const CaseStudiesPreview = lazy(() => import("@/components/sections/case-studies-preview"))
 //const Pricing = lazy(() => import("@/components/sections/pricing"))
 export default function Home() {
   return (
@@ -24,6 +25,9 @@ export default function Home() {
         </section>*/}
         <section id="testimonials" className="scroll-mt-20">
           <CompanyLogos />
+        </section>
+        <section id="case-studies" className="scroll-mt-20">
+          <CaseStudiesPreview />
         </section>
         {/*<section id="pricing" className="scroll-mt-20">
           <Pricing />
