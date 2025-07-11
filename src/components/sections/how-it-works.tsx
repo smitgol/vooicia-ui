@@ -2,6 +2,7 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 interface StepCardProps {
   number: string;
@@ -52,7 +53,7 @@ const stepsData = [
     number: "02",
     title: "Voice Training",
     description: "Train the AI with your brand voice, tone, and specific terminology for personalized customer interactions.",
-    image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&w=800&q=80"
+    image: "/images/voice_training_step.png"
   },
   {
     number: "03",
@@ -151,7 +152,9 @@ const HowItWorks = () => {
                   activeStep === index ? "opacity-100" : "opacity-0 pointer-events-none"
                 )}
               >
-                <img
+                <Image
+                  width={500}
+                  height={500}
                   src={step.image}
                   alt={step.title}
                   className="w-full h-full object-cover"
