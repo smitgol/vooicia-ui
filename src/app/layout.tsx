@@ -13,9 +13,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Voycia - Revolutionizing Business Communication',
-  description: 'Experience the future of customer service with our AI-powered call agent. Available 24/7 with multilingual support for the Indian market.',
-  keywords: ['AI call agent', 'customer service', 'India', 'business communication', 'AI assistant'],
+  title: 'Voycia - AI Voice Agents for Customer Support',
+  description: 'Voycia is an AI-powered voice agent for automating customer support. Improve customer experience with 24/7 voice support',
+  keywords: ['AI call agent', 'customer service', 'AI voice agent', 'business communication', 'AI assistant'],
 }
 
 export const viewport: Viewport = {

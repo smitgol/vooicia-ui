@@ -223,7 +223,7 @@ export default function Hero() {
         </div>
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-            <span className="bg-clip-text bg-[linear-gradient(93deg,#F59E0B_0%,#EA580C_80%)] text-transparent"><span className="text-gray-800">Automate Your Customer Service with </span><span className="">AI Voice Agents</span></span> 
+            <span className="bg-clip-text bg-[linear-gradient(93deg,#F59E0B_0%,#EA580C_80%)] text-transparent"><span className="text-gray-800">Automate Your Customer Support with </span><span className="">AI Voice Agents</span></span> 
           </h1>
           
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
