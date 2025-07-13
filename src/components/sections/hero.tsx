@@ -230,7 +230,7 @@ export default function Hero() {
           Answer customer calls 24/7, reduce wait time, and boost satisfaction. All with our intelligent voice agent.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <AnimatedButton 
               ref={buttonRef}
               size="lg" 

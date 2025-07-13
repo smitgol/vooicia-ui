@@ -66,7 +66,7 @@ const HowItWorks = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-block px-4 py-2 text-sm font-medium bg-primary/10 text-primary rounded-full mb-4"
+          className="inline-block px-4 py-2 md:text-sm text-xs font-medium bg-primary/10 text-primary rounded-full mb-4"
         >
           How We Work
         </motion.span>
@@ -74,18 +74,18 @@ const HowItWorks = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className='w-2/3'
+          className='md:w-2/3 w-full'
         >
-          <h2 className='font-bold md:text-5xl text-3xl my-5 font-[Gambit]'>A consultative approach</h2>
-          <p className='text-muted-foreground text-lg md:text-lg mt-12 leading-6'>
+          <h2 className='font-bold md:text-5xl text-4xl my-0 md:my-5 font-[Gambit]'>A consultative approach</h2>
+          <p className='text-muted-foreground text-sm md:text-lg mt-4 md:mt-12 leading-6'>
           {"Based on your business needs, we’ll help you tailor an AI voice agent that maximizes value capture from your existing operations and development pipeline. We’ll then work on your behalf to expedite timelines, optimize outcomes, and manage customer support."}
           </p>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-4 mt-16 divide-x divide-y md:divide-y-0 border rounded-xl overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-4 mt-8 md:mt-16 divide-x divide-y md:divide-y-0 border rounded-xl overflow-hidden">
           {stepsData.map((step, index) => (
             <div 
               key={index} 
-              className="flex flex-col items-start px-8 py-12 gap-10 hover:bg-accent/30 transition-colors"
+              className="flex flex-col items-start md:px-8 md:py-12 p-6 md:gap-10 gap-2 hover:bg-accent/30 transition-colors"
             >
               <div className="text-2xl font-bold text-primary">{step.number}</div>
               <div className="flex flex-col items-start gap-3">
