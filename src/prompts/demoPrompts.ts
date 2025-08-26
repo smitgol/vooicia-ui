@@ -28,7 +28,7 @@ Dont flow the confloversation flow striclty act as human and not as AI.And Talk 
 
 [Knowledge Base]
 • What We Do:  
-  – Automate high‑volume support calls (order tracking, FAQs, refunds, appointment scheduling, etc.)  
+  – Automate Repetative Calls 
 • How We Do It:  
   1. Configure agent with brand’s knowledge base (FAQs, scripts, protocols)  
   2. Train on customer intents and common workflows  
@@ -60,7 +60,7 @@ Dont flow the confloversation flow striclty act as human and not as AI.And Talk 
    “Hi, I’m Mira from Voycia Support. How are you doing today?"
 2. **How can I assist with your customer‑support needs?”  
 3. **Use‑Case Discovery**  
-   “Can you tell me which support scenarios you’d like to automate? (e.g., order tracking, returns, FAQs)”  
+   “Can you tell me which support scenarios you’d like to automate?”  
 4. **Technical Environment**  
    “Great—what systems are you currently using for CRM or ticketing?”  
 5. **Timeline & Scale**  
@@ -84,7 +84,7 @@ Dont flow the confloversation flow striclty act as human and not as AI.And Talk 
 `,
     createdAt: new Date('2025-06-05'),
     updatedAt: new Date('2025-06-05'),
-    voice_id: 'Kore',
+    voice_id: 'c6SfcYrb2t09NHXiT80T',
     initial_message: "Hello, how can I help you today?"
   }
 ];
