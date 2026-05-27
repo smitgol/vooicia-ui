@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { Sparkles, Mic, MessageSquare, Stethoscope, Home, ShoppingCart, UtensilsCrossed, Scale, Car, Wrench, Landmark, CheckCircle2 } from "lucide-react"
+import { Sparkles, Mic, MessageSquare, Stethoscope, Home, ShoppingCart, UtensilsCrossed, Scale, Car, Wrench, Landmark } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
