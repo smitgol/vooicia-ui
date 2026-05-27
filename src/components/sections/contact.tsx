@@ -152,9 +152,9 @@ export default function Contact() {
       <div className="absolute inset-0 bg-white/50 backdrop-blur-sm" />
 
       <div className="relative w-full z-10">
-        <div className="text-center pb-16">
+        <div className="text-center pb-16 px-4">
           <p className="inline-block px-4 py-2 text-sm font-medium bg-primary/10 text-primary rounded-full mb-4">Get In Touch</p>
-          <p className="text-xl text-muted-foreground">Have questions? Our team is here to help you get started</p>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">{"Tell us about your inbound calls — whatever industry you're in — and we'll scope a voice agent we can build, deploy, and run for you."}</p>
         </div>
         
         <div className="flex flex-col items-center justify-center w-full px-4">

@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { Sparkles, Mic, MessageSquare } from "lucide-react"
+import { Sparkles, Mic, MessageSquare, Stethoscope, Home, ShoppingCart, UtensilsCrossed, Scale, Car, Wrench, Landmark, CheckCircle2 } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -34,6 +34,17 @@ const ASSISTANTS: Assistant[] = [
     color: "from-violet-300 to-violet-500",
     language: "en"
   },
+];
+
+const INDUSTRIES = [
+  { label: "Healthcare", Icon: Stethoscope },
+  { label: "Real Estate", Icon: Home },
+  { label: "E-commerce & D2C", Icon: ShoppingCart },
+  { label: "Hospitality", Icon: UtensilsCrossed },
+  { label: "Legal", Icon: Scale },
+  { label: "Automotive", Icon: Car },
+  { label: "Home Services", Icon: Wrench },
+  { label: "Financial", Icon: Landmark },
 ];/**
  * Renders the interactive hero section for the landing page, featuring animated gradients, mouse-tracking effects, and product highlights.
  *
@@ -196,7 +207,7 @@ export default function Hero() {
 
   
   return (
-    <section ref={containerRef} className="relative overflow-hidden min-h-[90vh] flex items-center w-full bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100" onMouseMove={handleMouseMove}>
+    <section ref={containerRef} className="relative overflow-hidden min-h-[calc(100vh-3.75rem)] flex flex-col w-full bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100" onMouseMove={handleMouseMove}>
       <div
         className="pointer-events-none absolute w-80 h-80 rounded-full bg-gradient-to-br from-amber-300 to-orange-300 opacity-20 blur-3xl transition-transform duration-100"
         style={{
@@ -216,18 +227,18 @@ export default function Hero() {
         <div className="absolute bottom-20 right-10 w-2 h-2 bg-gradient-to-r from-orange-400 to-amber-400 rounded-full animate-pulse delay-1000 hover:scale-150 hover:animate-pulse transition-all duration-300 cursor-pointer" />
       </div>
           
-      <div className="container relative z-10 px-4 mx-auto flex flex-col items-center justify-center">
-        <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-100 via-orange-100 to-amber-50 rounded-full border border-amber-200 mb-8 shadow-md shadow-amber-200/50 hover:shadow-amber-300/70 hover:scale-105 hover:border-amber-300 hover:from-amber-200 hover:via-orange-200 hover:to-amber-100 transition-all duration-300 cursor-pointer group/badge">
+      <div className="container relative z-10 px-4 mx-auto flex-1 w-full flex flex-col items-center justify-center pt-16 md:pt-28">
+        <div className="inline-flex items-center px-6 py-4 bg-gradient-to-r from-amber-100 via-orange-100 to-amber-50 rounded-full border border-amber-200 mb-8 shadow-md shadow-amber-200/50 hover:shadow-amber-300/70 hover:scale-105 hover:border-amber-300 hover:from-amber-200 hover:via-orange-200 hover:to-amber-100 transition-all duration-300 cursor-pointer group/badge">
             <Sparkles className="w-4 h-4 mr-2 text-amber-600 group-hover/badge:animate-spin group-hover/badge:text-amber-700 transition-all duration-300" />
-            <span className="text-sm font-medium bg-gradient-to-r from-amber-700 to-orange-700 bg-clip-text text-transparent group-hover/badge:from-amber-800 group-hover/badge:to-orange-800">Next-Gen AI Customer Service</span>
+            <span className="text-sm font-medium bg-gradient-to-r from-amber-700 to-orange-700 bg-clip-text text-transparent group-hover/badge:from-amber-800 group-hover/badge:to-orange-800">Managed AI Voice Agents for Every Inbound Call</span>
         </div>
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-            <span className="bg-clip-text bg-[linear-gradient(93deg,#F59E0B_0%,#EA580C_80%)] text-transparent"><span className="text-gray-800">Automate Your Customer Support with </span><span className="">AI Voice Agents</span></span> 
+            <span className="bg-clip-text bg-[linear-gradient(93deg,#F59E0B_0%,#EA580C_80%)] text-transparent"><span className="text-gray-800">Never Miss an Inbound Call, </span><span className="">In Any Industry</span></span> 
           </h1>
           
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-          Answer customer calls 24/7, reduce wait time, and boost satisfaction. All with our intelligent voice agent.
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
+          We design, deploy, and operate AI voice agents that answer your incoming calls 24/7 — whether you run a clinic, a brokerage, a dealership, or a support line.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -340,7 +351,11 @@ export default function Hero() {
             </AnimatedButton>
           </div>
             
-          <div className="mt-12 flex flex-col md:flex-row justify-center gap-3 md:gap-6 text-muted-foreground w-[65%] mx-auto">
+        </div>
+      </div>
+
+      <div className="relative z-10 w-full pb-8 md:pb-10">
+      <div className="mt-12 flex flex-col md:flex-row justify-center gap-3 md:gap-6 text-muted-foreground w-[65%] mx-auto">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               <span>Integrate with AI workflow</span>
@@ -354,10 +369,72 @@ export default function Hero() {
               <span>Easy Customization</span>
             </div>
           </div>
+
+        <div className="mt-7 md:mt-9 flex flex-col items-center w-full">
+          <span className="text-[10px] uppercase tracking-[0.22em] text-amber-700/60 mb-4 font-semibold">
+            Industries we serve
+          </span>
+
+          <div
+            className="relative w-full overflow-hidden hero-marquee-mask"
+          >
+            <div className="flex gap-3 hero-marquee-track py-1">
+              {[...INDUSTRIES, ...INDUSTRIES].map((i, idx) => (
+                <div
+                  key={`${i.label}-${idx}`}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-sm shadow-sm shadow-amber-100/40 ring-1 ring-amber-100/60 shrink-0"
+                >
+                  <i.Icon className="w-4 h-4 text-amber-600" />
+                  <span className="text-sm font-medium text-amber-900 tracking-tight">
+                    {i.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+
+        <style jsx>{`
+          .hero-marquee-mask {
+            -webkit-mask-image: linear-gradient(
+              to right,
+              transparent 0%,
+              black 8%,
+              black 92%,
+              transparent 100%
+            );
+            mask-image: linear-gradient(
+              to right,
+              transparent 0%,
+              black 8%,
+              black 92%,
+              transparent 100%
+            );
+          }
+          @keyframes hero-marquee {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+          .hero-marquee-track {
+            width: max-content;
+            animation: hero-marquee 38s linear infinite;
+          }
+          .hero-marquee-track:hover {
+            animation-play-state: paused;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .hero-marquee-track {
+              animation: none;
+            }
+          }
+        `}</style>
       </div>
-      
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background to-transparent" />
     </section>
   )
 }
