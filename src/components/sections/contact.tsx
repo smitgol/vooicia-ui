@@ -148,13 +148,13 @@ export default function Contact() {
         backgroundImage: 'url("https://pulse-robot-template-105.lovable.app/Header-background.webp")',
       }}
     >
-      {/* Optional dark overlay for better readability */}
-      <div className="absolute inset-0 bg-white/50 backdrop-blur-sm" />
+      {/* Optional overlay for better readability — adapts to theme */}
+      <div className="absolute inset-0 bg-white/50 dark:bg-background/80 backdrop-blur-sm" />
 
       <div className="relative w-full z-10">
-        <div className="text-center pb-16">
+        <div className="text-center pb-16 px-4">
           <p className="inline-block px-4 py-2 text-sm font-medium bg-primary/10 text-primary rounded-full mb-4">Get In Touch</p>
-          <p className="text-xl text-muted-foreground">Have questions? Our team is here to help you get started</p>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">{"Tell us about your inbound calls — whatever industry you're in — and we'll scope a voice agent we can build, deploy, and run for you."}</p>
         </div>
         
         <div className="flex flex-col items-center justify-center w-full px-4">
@@ -213,7 +213,7 @@ export default function Contact() {
             </div>
           </div>*/}
           
-          <div className="bg-muted/30 rounded-2xl p-8 items-center justify-center md:w-1/2 w-full z-10 ">
+          <div className="bg-muted/30 dark:bg-card/60 border border-transparent dark:border-border rounded-2xl p-8 items-center justify-center md:w-1/2 w-full z-10 backdrop-blur-sm">
             <h3 className="text-2xl font-semibold mb-6">Send Us a Message</h3>
             
             {/* Status Messages */}

@@ -39,7 +39,7 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-white dark:bg-background">
       <div className="container px-4 mx-auto max-w-7xl">
         <div className="max-w-3xl mx-auto text-center mb-20">
           <span className="inline-block px-4 py-2 text-sm font-medium bg-primary/10 text-primary rounded-full mb-4">Features</span>
@@ -61,12 +61,12 @@ export default function Features() {
               transition={{ duration: 0.3, delay: index * 0.1 }}
               className="group"
             >
-              <Card className="h-full transition-all duration-300 hover:shadow-lg hover:shadow-amber-100/50 hover:border-amber-200/50 hover:-translate-y-1 gap-2 bg-white/80 backdrop-blur-sm">
+              <Card className="h-full transition-all duration-300 hover:shadow-lg hover:shadow-amber-100/50 dark:hover:shadow-amber-500/10 hover:border-amber-200/50 dark:hover:border-amber-500/30 hover:-translate-y-1 gap-2 bg-white/80 dark:bg-card/60 backdrop-blur-sm">
                 <CardHeader className="pb-1">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center group-hover:shadow-md group-hover:shadow-amber-200 transition-all duration-300">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center group-hover:shadow-md group-hover:shadow-amber-200 dark:group-hover:shadow-amber-500/30 transition-all duration-300">
                     <span className="text-white">{feature.icon}</span>
                   </div>
-                  <CardTitle className="text-xl font-semibold text-foreground/90 group-hover:text-amber-700 transition-colors duration-300">
+                  <CardTitle className="text-xl font-semibold text-foreground/90 group-hover:text-amber-700 dark:group-hover:text-amber-300 transition-colors duration-300">
                     {feature.title}
                   </CardTitle>
                 </CardHeader>

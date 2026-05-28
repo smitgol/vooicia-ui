@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { Logo } from "@/components/logo"
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react"
 
 export default function Footer() {
@@ -9,8 +10,7 @@ export default function Footer() {
       title: "Product",
       links: [
         { name: "Features", href: "#features" },
-        { name: "How it works", href: "#how-it-works" },
-        { name: "Demo", href: "#demo" },
+        { name: "How We Work", href: "#how-it-works" },
       ],
     },
     {
@@ -43,14 +43,9 @@ export default function Footer() {
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-12">
           {/* Mobile: Hidden, will be shown after links */}
           <div className="lg:col-span-2 space-y-4 hidden lg:block">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
-                Voycia
-              </span>
-            </Link>
+            <Logo size="md" />
             <p className="text-muted-foreground">
-              Revolutionizing customer service with AI-powered call agents for businesses. 
-              Available 24/7 with multilingual support.
+              A service-based AI voice agent company. We build and operate inbound voice agents for healthcare, real estate, e-commerce, hospitality, and any business where incoming calls matter.
             </p>
             <div className="flex items-center gap-4 pt-4">
               {socialLinks.map((social) => (
@@ -86,14 +81,9 @@ export default function Footer() {
           
           {/* Mobile: Show logo and description after links */}
           <div className="col-span-2 lg:hidden space-y-4 pt-8 border-t border-border/50 mt-8">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
-                Voycia
-              </span>
-            </Link>
+            <Logo size="md" />
             <p className="text-muted-foreground">
-              Revolutionizing customer service with AI-powered call agents for businesses. 
-              Available 24/7 with multilingual support.
+              A service-based AI voice agent company. We build and operate inbound voice agents for healthcare, real estate, e-commerce, hospitality, and any business where incoming calls matter.
             </p>
             <div className="flex items-center gap-4 pt-4">
               {socialLinks.map((social) => (

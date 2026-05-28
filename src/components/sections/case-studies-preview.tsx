@@ -32,8 +32,8 @@ export default function CaseStudiesPreview() {
       <div className="container max-w-6xl px-4 mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Case Studies</h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            {"Explore our success stories and see how we've helped businesses grow"}
+          <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+            {"Inbound voice agents we've built and now run for real businesses. E-commerce is shown below — our service model applies the same way to healthcare, real estate, hospitality, and other inbound-call-heavy industries."}
           </p>
         </div>
         

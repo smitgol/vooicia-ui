@@ -1,21 +1,26 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Manrope } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Navigation } from '@/components/navigation'
 import { MotionProvider } from '@/components/providers/motion-provider'
 import { Analytics } from "@vercel/analytics/next"
-const inter = Inter({ 
+const manrope = Manrope({ 
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-manrope',
   preload: true,
 })
 
 export const metadata: Metadata = {
-  title: 'Voycia - AI Voice Agents for Customer Support',
-  description: 'Voycia is an AI-powered voice agent for automating customer support. Improve customer experience with 24/7 voice support',
-  keywords: ['AI call agent', 'customer service', 'AI voice agent', 'business communication', 'AI assistant'],
+  title: 'Voycia - Managed AI Voice Agents for Inbound Calls, Across Industries',
+  description: 'Voycia is a service-based voice agent company. We design, deploy, and operate AI voice agents that answer your incoming calls 24/7 — for healthcare, real estate, e-commerce, hospitality, legal, automotive, home services, and more.',
+  keywords: ['AI voice agent service', 'inbound call automation', 'managed voice agents', 'healthcare voice agent', 'real estate voice agent', 'voice agent agency', 'incoming call AI'],
+  icons: {
+    icon: '/logo.svg',
+    shortcut: '/logo.svg',
+    apple: '/logo.svg',
+  },
 }
 
 export const viewport: Viewport = {
@@ -37,7 +42,7 @@ export default function RootLayout({
   return (
     <html 
       lang="en" 
-      className={`${inter.variable} scroll-smooth`}
+      className={`${manrope.variable} scroll-smooth`}
       style={{ scrollBehavior: 'smooth' }}
       suppressHydrationWarning
     >
@@ -46,6 +51,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="light"
           enableSystem={false}
+          storageKey="voycia-theme"
           disableTransitionOnChange
         >
           <MotionProvider>

@@ -51,16 +51,16 @@ const pricingPlans = [
 export default function Pricing() {
     const router = useRouter()
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section className="py-16 md:py-24 bg-white dark:bg-background">
       <div className="container px-4 mx-auto max-w-7xl">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <span className="inline-block px-4 py-2 text-sm font-medium bg-violet-100 text-violet-600 rounded-full mb-4">
+          <span className="inline-block px-4 py-2 text-sm font-medium bg-violet-100 dark:bg-violet-500/15 text-violet-600 dark:text-violet-300 rounded-full mb-4">
             Pricing Plans
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-foreground dark:to-foreground/70 mb-4">
             Simple, transparent pricing
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 dark:text-muted-foreground">
             Choose the perfect plan for your business needs
           </p>
         </div>
@@ -74,10 +74,10 @@ export default function Pricing() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
               className={cn(
-                "relative flex flex-col p-8 rounded-2xl border border-gray-200",
-                plan.popular 
-                  ? "border-2 border-violet-500 shadow-xl scale-[1.03] bg-gradient-to-b from-white to-violet-50" 
-                  : "hover:shadow-lg hover:border-violet-200 transition-all duration-300"
+                "relative flex flex-col p-8 rounded-2xl border border-gray-200 dark:border-border bg-white dark:bg-card",
+                plan.popular
+                  ? "border-2 border-violet-500 dark:border-violet-400 shadow-xl scale-[1.03] bg-gradient-to-b from-white to-violet-50 dark:from-card dark:to-violet-500/10"
+                  : "hover:shadow-lg hover:border-violet-200 dark:hover:border-violet-400/40 transition-all duration-300"
               )}
             >
               {plan.popular && (
@@ -87,40 +87,40 @@ export default function Pricing() {
                   </span>
                 </div>
               )}
-              
+
               <div className="flex-1">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                <p className="text-gray-600 mb-6">{plan.description}</p>
-                
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-foreground mb-2">{plan.name}</h3>
+                <p className="text-gray-600 dark:text-muted-foreground mb-6">{plan.description}</p>
+
                 <div className="mb-8">
                   <div className="flex items-baseline justify-center gap-2">
-                    <span className="text-4xl font-bold text-gray-900">
+                    <span className="text-4xl font-bold text-gray-900 dark:text-foreground">
                       {typeof plan.price === 'number' ? `$${plan.price}` : plan.price}
                     </span>
                     {typeof plan.price === 'number' && (
-                      <span className="text-gray-500">/month</span>
+                      <span className="text-gray-500 dark:text-muted-foreground">/month</span>
                     )}
                   </div>
-                  <p className="text-sm text-gray-500 mt-2">+ $399 one-time setup fee</p>
+                  <p className="text-sm text-gray-500 dark:text-muted-foreground mt-2">+ $399 one-time setup fee</p>
                 </div>
-                
+
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start">
-                      <Check className="w-5 h-5 text-violet-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700">{feature}</span>
+                      <Check className="w-5 h-5 text-violet-500 dark:text-violet-400 mr-2 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-700 dark:text-foreground/90">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-              
-              <Button 
-                size="lg" 
+
+              <Button
+                size="lg"
                 className={cn(
                   "w-full mt-auto",
-                  plan.popular 
-                    ? "bg-violet-600 hover:bg-violet-700 text-white" 
-                    : "bg-white text-violet-600 border border-violet-200 hover:bg-violet-50"
+                  plan.popular
+                    ? "bg-violet-600 hover:bg-violet-700 text-white"
+                    : "bg-white dark:bg-transparent text-violet-600 dark:text-violet-300 border border-violet-200 dark:border-violet-400/40 hover:bg-violet-50 dark:hover:bg-violet-500/10"
                 )}
                 onClick={() => router.push("#contact")}
               >
@@ -130,10 +130,10 @@ export default function Pricing() {
             </motion.div>
           ))}
         </div>
-        
+
         <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4">Need something custom?</p>
-          <Button variant="outline" className="border-violet-200 text-violet-600 hover:bg-violet-50">
+          <p className="text-gray-600 dark:text-muted-foreground mb-4">Need something custom?</p>
+          <Button variant="outline" className="border-violet-200 dark:border-violet-400/40 text-violet-600 dark:text-violet-300 hover:bg-violet-50 dark:hover:bg-violet-500/10">
             Contact our sales team
           </Button>
         </div>
