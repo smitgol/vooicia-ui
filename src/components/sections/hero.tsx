@@ -249,7 +249,7 @@ export default function Hero() {
 
   
   return (
-    <section id="hero" ref={containerRef} className="relative overflow-hidden min-h-[calc(100vh-3.75rem)] flex flex-col w-full bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 dark:from-background dark:via-background dark:to-background scroll-mt-20" onMouseMove={handleMouseMove}>
+    <section id="hero" ref={containerRef} className="relative overflow-hidden md:min-h-[calc(100vh-3.75rem)] flex flex-col w-full bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 dark:from-background dark:via-background dark:to-background scroll-mt-20" onMouseMove={handleMouseMove}>
       <div
         className="pointer-events-none absolute w-80 h-80 rounded-full bg-gradient-to-br from-amber-300 to-orange-300 dark:from-amber-500/40 dark:to-orange-500/40 opacity-20 dark:opacity-30 blur-3xl transition-transform duration-100"
         style={{
@@ -269,25 +269,25 @@ export default function Hero() {
         <div className="absolute bottom-20 right-10 w-2 h-2 bg-gradient-to-r from-orange-400 to-amber-400 rounded-full animate-pulse delay-1000 hover:scale-150 hover:animate-pulse transition-all duration-300 cursor-pointer" />
       </div>
           
-      <div className="container relative z-10 px-4 mx-auto flex-1 w-full flex flex-col items-center justify-center pt-16 md:pt-28">
-        <div className="inline-flex items-center px-6 py-4 bg-gradient-to-r from-amber-100 via-orange-100 to-amber-50 dark:from-amber-500/15 dark:via-orange-500/15 dark:to-amber-500/10 rounded-full border border-amber-200 dark:border-amber-500/30 mb-8 shadow-md shadow-amber-200/50 dark:shadow-amber-500/10 hover:shadow-amber-300/70 dark:hover:shadow-amber-500/30 hover:scale-105 hover:border-amber-300 dark:hover:border-amber-500/50 hover:from-amber-200 hover:via-orange-200 hover:to-amber-100 dark:hover:from-amber-500/25 dark:hover:via-orange-500/25 dark:hover:to-amber-500/20 transition-all duration-300 cursor-pointer group/badge">
-            <Sparkles className="w-4 h-4 mr-2 text-amber-600 dark:text-amber-400 group-hover/badge:animate-spin group-hover/badge:text-amber-700 dark:group-hover/badge:text-amber-300 transition-all duration-300" />
-            <span className="text-sm font-medium bg-gradient-to-r from-amber-700 to-orange-700 dark:from-amber-300 dark:to-orange-300 bg-clip-text text-transparent group-hover/badge:from-amber-800 group-hover/badge:to-orange-800 dark:group-hover/badge:from-amber-200 dark:group-hover/badge:to-orange-200">Managed AI Voice Agents for Every Inbound Call</span>
+      <div className="container relative z-10 px-4 mx-auto flex-1 w-full flex flex-col items-center justify-start md:justify-center pt-20 md:pt-28">
+        <div className="inline-flex items-center max-w-[92vw] px-3 py-2 sm:px-6 sm:py-4 bg-gradient-to-r from-amber-100 via-orange-100 to-amber-50 dark:from-amber-500/15 dark:via-orange-500/15 dark:to-amber-500/10 rounded-full border border-amber-200 dark:border-amber-500/30 mb-6 sm:mb-8 shadow-md shadow-amber-200/50 dark:shadow-amber-500/10 hover:shadow-amber-300/70 dark:hover:shadow-amber-500/30 hover:scale-105 hover:border-amber-300 dark:hover:border-amber-500/50 hover:from-amber-200 hover:via-orange-200 hover:to-amber-100 dark:hover:from-amber-500/25 dark:hover:via-orange-500/25 dark:hover:to-amber-500/20 transition-all duration-300 cursor-pointer group/badge">
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2 shrink-0 text-amber-600 dark:text-amber-400 group-hover/badge:animate-spin group-hover/badge:text-amber-700 dark:group-hover/badge:text-amber-300 transition-all duration-300" />
+            <span className="text-[11px] sm:text-sm font-medium leading-tight text-center bg-gradient-to-r from-amber-700 to-orange-700 dark:from-amber-300 dark:to-orange-300 bg-clip-text text-transparent group-hover/badge:from-amber-800 group-hover/badge:to-orange-800 dark:group-hover/badge:from-amber-200 dark:group-hover/badge:to-orange-200">Managed AI Voice Agents for Every Inbound Call</span>
         </div>
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
+          <h1 className="text-[2rem] leading-[1.1] sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
             <span className="bg-clip-text bg-[linear-gradient(93deg,#F59E0B_0%,#EA580C_80%)] text-transparent"><span className="text-gray-800 dark:text-foreground">Never Miss an Inbound Call, </span><span className="">In Any Industry</span></span>
           </h1>
-          
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
+
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 sm:mb-4 px-2">
           We design, deploy, and operate AI voice agents that answer your incoming calls 24/7 — whether you run a clinic, a brokerage, a dealership, or a support line.
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <AnimatedButton 
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-4 sm:mt-0">
+            <AnimatedButton
               ref={buttonRef}
-              size="lg" 
-              className="font-bold cursor-pointer text-lg px-8 py-6 transition-all duration-600 hover:shadow-amber-500/40 relative overflow-hidden w-64 group" 
+              size="lg"
+              className="font-bold cursor-pointer text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 transition-all duration-600 hover:shadow-amber-500/40 relative overflow-hidden w-full max-w-xs sm:w-64 group" 
               onClick={(e) => {
                 handleRipple(e);
                 if (isRecording) {
@@ -392,27 +392,27 @@ export default function Hero() {
               `}</style>
             </AnimatedButton>
           </div>
-            
-        </div>
-      </div>
 
-      <div className="relative z-10 w-full pb-8 md:pb-10">
-      <div className="mt-12 flex flex-col md:flex-row justify-center gap-3 md:gap-6 text-muted-foreground w-[65%] mx-auto">
+          <div className="mt-5 md:mt-10 flex flex-col md:flex-row justify-center items-start md:items-center gap-2 md:gap-6 text-sm md:text-base text-muted-foreground w-fit md:w-auto mx-auto">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shrink-0" />
               <span>Integrate with AI workflow</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse shrink-0" />
               <span>Multilingual Support</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse shrink-0" />
               <span>Easy Customization</span>
             </div>
           </div>
 
-        <div className="mt-7 md:mt-9 flex flex-col items-center w-full">
+        </div>
+      </div>
+
+      <div className="relative z-10 w-full pb-8 md:pb-10 mt-8 md:mt-0">
+        <div className="md:mt-9 flex flex-col items-center w-full">
           <span className="text-[10px] uppercase tracking-[0.22em] text-amber-700/60 dark:text-amber-300/70 mb-4 font-semibold">
             Industries we serve
           </span>

@@ -28,16 +28,16 @@ const caseStudies = [
 
 export default function CaseStudiesPreview() {
   return (
-    <section id="case-studies" className="py-16 mt-16">
+    <section id="case-studies" className="py-12 sm:py-16 mt-8 sm:mt-16">
       <div className="container max-w-6xl px-4 mx-auto">
-        <div className="text-center mb-12">
+        <div className="text-center mb-10 sm:mb-12">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Case Studies</h2>
-          <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
             {"Inbound voice agents we've built and now run for real businesses. E-commerce is shown below — our service model applies the same way to healthcare, real estate, hospitality, and other inbound-call-heavy industries."}
           </p>
         </div>
-        
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+        <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
           {caseStudies.map((study) => (
             <Card key={study.id} className="flex flex-col h-full transition-all hover:shadow-lg">
               <CardHeader>

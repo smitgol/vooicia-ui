@@ -39,19 +39,19 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="py-24 bg-white dark:bg-background">
+    <section className="py-16 md:py-24 bg-white dark:bg-background">
       <div className="container px-4 mx-auto max-w-7xl">
-        <div className="max-w-3xl mx-auto text-center mb-20">
-          <span className="inline-block px-4 py-2 text-sm font-medium bg-primary/10 text-primary rounded-full mb-4">Features</span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70 font-[Gambit]">
+        <div className="max-w-3xl mx-auto text-center mb-12 md:mb-20">
+          <span className="inline-block px-4 py-2 text-xs sm:text-sm font-medium bg-primary/10 text-primary rounded-full mb-4">Features</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70 font-[Gambit]">
             Everything You Need to Transform Your Business
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground">
             Powerful features designed to enhance your customer communication and drive business growth
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={index}
