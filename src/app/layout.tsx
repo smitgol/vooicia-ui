@@ -51,6 +51,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="light"
           enableSystem={false}
+          storageKey="voycia-theme"
           disableTransitionOnChange
         >
           <MotionProvider>

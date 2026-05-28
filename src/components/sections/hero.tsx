@@ -93,12 +93,54 @@ export default function Hero() {
   const startDemo = () => {
     connectToAssistant();
   }
+
+  useEffect(() => {
+    startDemoRef.current = startDemo;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  });
   useEffect(() => {
       const botAudio = document.createElement('audio');
       botAudio.autoplay = true;
       botAudioRef.current = botAudio;
       document.body.appendChild(botAudio);
     }, []);
+
+  // Refs so the latest state/handlers are available inside the event listener
+  // without re-binding it on every render.
+  const startDemoRef = useRef<() => void>(() => {});
+  const isBusyRef = useRef(false);
+
+  useEffect(() => {
+    isBusyRef.current = isRecording || connecting;
+  }, [isRecording, connecting]);
+
+  // Auto-start the assistant when the nav "Try Now" button (or any external
+  // trigger) fires the `voycia:start-talk` event, OR when the page is loaded
+  // with `?talk=1` (used when navigating in from another route).
+  useEffect(() => {
+    const trigger = () => {
+      if (isBusyRef.current) return;
+      startDemoRef.current();
+    };
+
+    window.addEventListener("voycia:start-talk", trigger);
+
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("talk") === "1") {
+      // Clean the URL so reloads don't keep re-triggering the demo.
+      const cleanedUrl = window.location.pathname + window.location.hash;
+      window.history.replaceState({}, "", cleanedUrl);
+      // Small delay so the bot audio element (set up in the effect above)
+      // and the WebSocket transport are ready to go.
+      timeoutId = setTimeout(trigger, 250);
+    }
+
+    return () => {
+      window.removeEventListener("voycia:start-talk", trigger);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, []);
 
   
   const setUpMediaTracks = () => {
@@ -207,16 +249,16 @@ export default function Hero() {
 
   
   return (
-    <section ref={containerRef} className="relative overflow-hidden min-h-[calc(100vh-3.75rem)] flex flex-col w-full bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100" onMouseMove={handleMouseMove}>
+    <section id="hero" ref={containerRef} className="relative overflow-hidden min-h-[calc(100vh-3.75rem)] flex flex-col w-full bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 dark:from-background dark:via-background dark:to-background scroll-mt-20" onMouseMove={handleMouseMove}>
       <div
-        className="pointer-events-none absolute w-80 h-80 rounded-full bg-gradient-to-br from-amber-300 to-orange-300 opacity-20 blur-3xl transition-transform duration-100"
+        className="pointer-events-none absolute w-80 h-80 rounded-full bg-gradient-to-br from-amber-300 to-orange-300 dark:from-amber-500/40 dark:to-orange-500/40 opacity-20 dark:opacity-30 blur-3xl transition-transform duration-100"
         style={{
           left: position.x - 100,
           top: position.y - 100,
         }}
       />
-      <div className="absolute inset-0 transition duration-500 opacity-50" 
-      style={{backgroundImage: "linear-gradient(90deg, rgb(253, 186, 116) 0%, rgb(251, 146, 60) 71.42%), url(assets/header/bg-grid.svg), url(assets/header/bg-grid.svg)", 
+      <div className="absolute inset-0 transition duration-500 opacity-50 dark:opacity-25"
+      style={{backgroundImage: "linear-gradient(90deg, rgb(253, 186, 116) 0%, rgb(251, 146, 60) 71.42%), url(assets/header/bg-grid.svg), url(assets/header/bg-grid.svg)",
         backgroundSize: 'contain',
         backgroundBlendMode: 'overlay',
         maskImage: `radial-gradient(300px 350px at ${position.x}px ${position.y}px, rgb(255, 255, 255), 40%, transparent)`}}></div>
@@ -228,13 +270,13 @@ export default function Hero() {
       </div>
           
       <div className="container relative z-10 px-4 mx-auto flex-1 w-full flex flex-col items-center justify-center pt-16 md:pt-28">
-        <div className="inline-flex items-center px-6 py-4 bg-gradient-to-r from-amber-100 via-orange-100 to-amber-50 rounded-full border border-amber-200 mb-8 shadow-md shadow-amber-200/50 hover:shadow-amber-300/70 hover:scale-105 hover:border-amber-300 hover:from-amber-200 hover:via-orange-200 hover:to-amber-100 transition-all duration-300 cursor-pointer group/badge">
-            <Sparkles className="w-4 h-4 mr-2 text-amber-600 group-hover/badge:animate-spin group-hover/badge:text-amber-700 transition-all duration-300" />
-            <span className="text-sm font-medium bg-gradient-to-r from-amber-700 to-orange-700 bg-clip-text text-transparent group-hover/badge:from-amber-800 group-hover/badge:to-orange-800">Managed AI Voice Agents for Every Inbound Call</span>
+        <div className="inline-flex items-center px-6 py-4 bg-gradient-to-r from-amber-100 via-orange-100 to-amber-50 dark:from-amber-500/15 dark:via-orange-500/15 dark:to-amber-500/10 rounded-full border border-amber-200 dark:border-amber-500/30 mb-8 shadow-md shadow-amber-200/50 dark:shadow-amber-500/10 hover:shadow-amber-300/70 dark:hover:shadow-amber-500/30 hover:scale-105 hover:border-amber-300 dark:hover:border-amber-500/50 hover:from-amber-200 hover:via-orange-200 hover:to-amber-100 dark:hover:from-amber-500/25 dark:hover:via-orange-500/25 dark:hover:to-amber-500/20 transition-all duration-300 cursor-pointer group/badge">
+            <Sparkles className="w-4 h-4 mr-2 text-amber-600 dark:text-amber-400 group-hover/badge:animate-spin group-hover/badge:text-amber-700 dark:group-hover/badge:text-amber-300 transition-all duration-300" />
+            <span className="text-sm font-medium bg-gradient-to-r from-amber-700 to-orange-700 dark:from-amber-300 dark:to-orange-300 bg-clip-text text-transparent group-hover/badge:from-amber-800 group-hover/badge:to-orange-800 dark:group-hover/badge:from-amber-200 dark:group-hover/badge:to-orange-200">Managed AI Voice Agents for Every Inbound Call</span>
         </div>
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-            <span className="bg-clip-text bg-[linear-gradient(93deg,#F59E0B_0%,#EA580C_80%)] text-transparent"><span className="text-gray-800">Never Miss an Inbound Call, </span><span className="">In Any Industry</span></span> 
+            <span className="bg-clip-text bg-[linear-gradient(93deg,#F59E0B_0%,#EA580C_80%)] text-transparent"><span className="text-gray-800 dark:text-foreground">Never Miss an Inbound Call, </span><span className="">In Any Industry</span></span>
           </h1>
           
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
@@ -371,7 +413,7 @@ export default function Hero() {
           </div>
 
         <div className="mt-7 md:mt-9 flex flex-col items-center w-full">
-          <span className="text-[10px] uppercase tracking-[0.22em] text-amber-700/60 mb-4 font-semibold">
+          <span className="text-[10px] uppercase tracking-[0.22em] text-amber-700/60 dark:text-amber-300/70 mb-4 font-semibold">
             Industries we serve
           </span>
 
@@ -382,10 +424,10 @@ export default function Hero() {
               {[...INDUSTRIES, ...INDUSTRIES].map((i, idx) => (
                 <div
                   key={`${i.label}-${idx}`}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-sm shadow-sm shadow-amber-100/40 ring-1 ring-amber-100/60 shrink-0"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 dark:bg-white/5 backdrop-blur-sm shadow-sm shadow-amber-100/40 dark:shadow-black/40 ring-1 ring-amber-100/60 dark:ring-amber-500/20 shrink-0"
                 >
-                  <i.Icon className="w-4 h-4 text-amber-600" />
-                  <span className="text-sm font-medium text-amber-900 tracking-tight">
+                  <i.Icon className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                  <span className="text-sm font-medium text-amber-900 dark:text-amber-200 tracking-tight">
                     {i.label}
                   </span>
                 </div>
