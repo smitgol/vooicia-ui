@@ -39,13 +39,13 @@ export function Navigation() {
 
   return (
     <header
-      className={`fixed w-4/5 md:w-1/2 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ${
+      className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ${
         isScrolled
-          ? "top-4 w-1/2 bg-background/40 dark:bg-background/30 backdrop-blur-md shadow-sm dark:shadow-black/40 rounded-4xl border border-border/40"
-          : "top-2 w-full md:w-4/5 bg-background/80 dark:bg-background/70 backdrop-blur-sm border border-transparent"
+          ? "top-3 sm:top-4 w-[94%] sm:w-[88%] md:w-1/2 bg-background/40 dark:bg-background/30 backdrop-blur-md shadow-sm dark:shadow-black/40 rounded-3xl md:rounded-4xl border border-border/40"
+          : "top-2 w-[96%] md:w-4/5 bg-background/80 dark:bg-background/70 backdrop-blur-sm border border-transparent"
       }`}
     >
-      <div className="container mx-auto py-1.5 px-6 flex flex-col justify-center gap-1 sm:gap-2">
+      <div className="container mx-auto py-1.5 px-3 sm:px-4 md:px-6 flex flex-col justify-center gap-1 sm:gap-2">
         <div className={`flex items-center justify-between w-full`}>
           {/* Logo */}
           <div className="flex justify-between w-full md:w-auto items-center">

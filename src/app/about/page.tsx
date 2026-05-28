@@ -7,9 +7,9 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="container mx-auto max-w-4xl px-4 py-24">
-      <h1 className="text-4xl font-bold mb-8">About Us</h1>
-      <p className="text-lg text-muted-foreground mb-6">
+    <main className="container mx-auto max-w-4xl px-4 py-16 sm:py-24">
+      <h1 className="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8">About Us</h1>
+      <p className="text-base sm:text-lg text-muted-foreground mb-6">
         Voycia is a service-based AI voice agent company. We design, build, and operate AI voice agents that answer your incoming calls 24/7 — so that no caller goes to voicemail and no opportunity slips away. We work with businesses across industries: healthcare clinics, real estate firms, e-commerce brands, hospitality operators, law offices, auto dealerships, home-services companies, financial services, and customer support teams.
       </p>
 
@@ -89,8 +89,8 @@ export default function AboutPage() {
         {`As we grow, we remain committed to our founding principle: be the partner that businesses of any size, in any industry, can hand their incoming call line to with full confidence.`}
       </p>
 
-      <div className="bg-muted/50 rounded-lg p-6 mt-12">
-        <h3 className="text-xl font-semibold mb-3">Ready to hand off your inbound call line?</h3>
+      <div className="bg-muted/50 rounded-lg p-5 sm:p-6 mt-10 sm:mt-12">
+        <h3 className="text-lg sm:text-xl font-semibold mb-3">Ready to hand off your inbound call line?</h3>
         <p className="text-muted-foreground mb-4">
           {`Tell us about your business and the calls you receive. We'll scope a voice agent we can build, deploy, and run for you.`}
         </p>

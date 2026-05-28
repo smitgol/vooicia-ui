@@ -46,7 +46,7 @@ export default function RootLayout({
       style={{ scrollBehavior: 'smooth' }}
       suppressHydrationWarning
     >
-      <body className={`font-sans min-h-screen bg-background antialiased text-foreground overflow-x-hidden`}>
+      <body className={`font-sans min-h-screen bg-background antialiased text-foreground overflow-x-hidden w-full max-w-[100vw]`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

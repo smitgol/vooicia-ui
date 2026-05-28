@@ -53,14 +53,14 @@ export default function Pricing() {
   return (
     <section className="py-16 md:py-24 bg-white dark:bg-background">
       <div className="container px-4 mx-auto max-w-7xl">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <span className="inline-block px-4 py-2 text-sm font-medium bg-violet-100 dark:bg-violet-500/15 text-violet-600 dark:text-violet-300 rounded-full mb-4">
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+          <span className="inline-block px-4 py-2 text-xs sm:text-sm font-medium bg-violet-100 dark:bg-violet-500/15 text-violet-600 dark:text-violet-300 rounded-full mb-4">
             Pricing Plans
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-foreground dark:to-foreground/70 mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-foreground dark:to-foreground/70 mb-4">
             Simple, transparent pricing
           </h2>
-          <p className="text-lg text-gray-600 dark:text-muted-foreground">
+          <p className="text-base sm:text-lg text-gray-600 dark:text-muted-foreground">
             Choose the perfect plan for your business needs
           </p>
         </div>
@@ -74,9 +74,9 @@ export default function Pricing() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
               className={cn(
-                "relative flex flex-col p-8 rounded-2xl border border-gray-200 dark:border-border bg-white dark:bg-card",
+                "relative flex flex-col p-6 sm:p-8 rounded-2xl border border-gray-200 dark:border-border bg-white dark:bg-card",
                 plan.popular
-                  ? "border-2 border-violet-500 dark:border-violet-400 shadow-xl scale-[1.03] bg-gradient-to-b from-white to-violet-50 dark:from-card dark:to-violet-500/10"
+                  ? "border-2 border-violet-500 dark:border-violet-400 shadow-xl md:scale-[1.03] bg-gradient-to-b from-white to-violet-50 dark:from-card dark:to-violet-500/10"
                   : "hover:shadow-lg hover:border-violet-200 dark:hover:border-violet-400/40 transition-all duration-300"
               )}
             >
