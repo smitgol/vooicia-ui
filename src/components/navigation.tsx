@@ -78,7 +78,7 @@ export function Navigation() {
               className="ml-2 font-bold cursor-pointer hover:scale-105 transition delay-200 duration-300 ease-in-out rounded-4xl px-4 py-2"
               onClick={handleTryNow}
             >
-              Try Now
+              Talk to AI
             </Button>
           </nav>
         </div>
@@ -104,7 +104,7 @@ export function Navigation() {
                   handleTryNow()
                 }}
               >
-                Try Now
+                Talk to our AI
               </Button>
             </nav>
           </div>
